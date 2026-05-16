@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Pack build
-        run: tar -czf next-build.tar.gz .next public package.json package-lock.json
+        run: tar -czf next-build.tar.gz .next package.json package-lock.json
 
       - name: Upload build to server
         uses: appleboy/scp-action@v1
