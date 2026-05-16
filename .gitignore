@@ -1,0 +1,29 @@
+# dependencies
+node_modules
+
+# next.js
+.next
+out
+
+# strapi
+.cache
+build
+dist
+
+# env
+.env
+.env.local
+
+# logs
+logs
+*.log
+
+# mac/linux/windows
+.DS_Store
+Thumbs.db
+
+# vscode
+.vscode
+
+# docker
+postgres_data
