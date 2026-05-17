@@ -54,7 +54,7 @@ jobs:
             cd ${{ secrets.DEPLOY_PATH }}
 
             rm -rf .next public package.json package-lock.json
-            tar -xzf frontend/next-build.tar.gz --strip-components=1
+            tar -xzf frontend/next-build.tar.gz
             rm -rf frontend
             npm install --omit=dev
 
