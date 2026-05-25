@@ -1,25 +1,154 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fff8ed;
+  --foreground: #163b59;
+  --cream: #fff8ed;
+  --ink: #163b59;
+  --brand: #5ccbc4;
+  --brand-dark: #207f82;
+  --coral: #f57d72;
+  --sun: #f7e5a6;
+  --mint: #e4f5ef;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-coral: var(--coral);
+  --color-sun: var(--sun);
+  --color-mint: var(--mint);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Trebuchet MS", Arial, sans-serif;
   margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.font-display {
+  font-family: "Arial Rounded MT Bold", "Trebuchet MS", Arial, sans-serif;
+}
+
+.pattern-grid {
+  background-image:
+    linear-gradient(rgb(22 59 89 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 59 89 / 0.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
+}
+
+.badge {
+  align-items: center;
+  background: white;
+  border: 2px solid rgb(22 59 89 / 0.12);
+  border-radius: 999px;
+  color: var(--ink);
+  display: inline-flex;
+  gap: 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  padding: 0.75rem 1.1rem;
+  text-transform: uppercase;
+}
+
+.nav-link {
+  color: rgb(22 59 89 / 0.72);
+  transition: color 180ms ease;
+}
+
+.nav-link:hover {
+  color: var(--coral);
+}
+
+.button-primary,
+.button-secondary {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  justify-content: center;
+  padding: 0.9rem 1.35rem;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.button-primary {
+  background: var(--coral);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  color: white;
+}
+
+.button-primary:hover {
+  box-shadow: 2px 2px 0 var(--ink);
+  transform: translate(2px, 2px);
+}
+
+.button-secondary {
+  background: white;
+  border: 2px solid var(--ink);
+}
+
+.button-secondary:hover {
+  background: var(--sun);
+  transform: translateY(-2px);
+}
+
+.feature-chip {
+  align-items: center;
+  background: white;
+  border: 2px solid rgb(22 59 89 / 0.1);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 700;
+  gap: 0.45rem;
+  padding: 0.7rem 1rem;
+}
+
+.logo-stage::after {
+  background: var(--coral);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  content: "";
+  height: 1.3rem;
+  position: absolute;
+  right: 2.1rem;
+  top: 2.1rem;
+  width: 1.3rem;
+}
+
+.section-label {
+  color: var(--coral);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  color: var(--ink);
+  font-family: "Arial Rounded MT Bold", "Trebuchet MS", Arial, sans-serif;
+  font-size: clamp(2.35rem, 4vw, 3.3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.12;
 }
