@@ -19,10 +19,10 @@ export function SiteHeader() {
             width={300}
           />
           <span className="hidden leading-tight sm:block">
-            <span className="block font-display text-lg font-bold uppercase tracking-[0.06em]">
+            <span className="block font-display text-lg font-bold uppercase">
               {siteConfig.name}
             </span>
-            <span className="block text-xs font-semibold uppercase tracking-[0.22em] text-ink/60">
+            <span className="block text-xs font-semibold uppercase text-ink/60">
               {siteConfig.shortDescription}
             </span>
           </span>
@@ -36,8 +36,8 @@ export function SiteHeader() {
           ))}
         </div>
 
-        <Link className="button-primary shrink-0" href="/#kontakt">
-          Zapytaj o wydruk
+        <Link className="button-primary shrink-0" href="/blog">
+          Czytaj blog
         </Link>
       </nav>
     </header>

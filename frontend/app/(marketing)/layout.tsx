@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { CookieConsent } from "@/features/legal/components/cookie-consent";
 
 export default function MarketingLayout({
   children,
@@ -11,6 +12,7 @@ export default function MarketingLayout({
       <SiteHeader />
       {children}
       <SiteFooter />
+      <CookieConsent />
     </div>
   );
 }

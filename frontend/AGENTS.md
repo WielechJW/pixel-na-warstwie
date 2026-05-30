@@ -8,10 +8,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Cel
 
-Projekt jest stroną marki druku 3D, przygotowaną do rozwoju o blog oraz sklep
-internetowy. Kod ma pozostać prosty do odczytania: routing i layouty należą do
-`app/`, współdzielone elementy interfejsu do `components/`, a logika i widoki
-konkretnych funkcji biznesowych do `features/`.
+Projekt jest stroną marki druku 3D nastawioną obecnie na blog o nauce,
+eksperymentach i doświadczeniach z druku 3D. Nie jest na razie ofertą druku na
+zamówienie ani sklepem. Kod ma pozostać prosty do odczytania: routing i layouty
+należą do `app/`, współdzielone elementy interfejsu do `components/`, a logika i
+widoki konkretnych funkcji biznesowych do `features/`.
 
 Jeżeli lokalna dokumentacja Next.js wskazana powyżej nie jest obecna w
 zainstalowanej paczce, przed użyciem nowego API sprawdź oficjalną dokumentację
@@ -26,6 +27,9 @@ app/
   (marketing)/
     layout.tsx                  # wspólny shell strony publicznej
     page.tsx                    # kompozycja strony głównej pod adresem /
+    blog/
+      page.tsx                  # lista wpisów blogowych
+      [slug]/page.tsx           # artykuł i metadata SEO
 components/
   layout/
     site-header.tsx             # nawigacja publiczna
@@ -33,12 +37,14 @@ components/
 config/
   site.ts                       # nazwa marki, tagline i nawigacja
 features/
+  blog/
+    content.ts                  # model i treści wpisów blogowych
+    components/                 # widoki listy oraz szczegółu wpisu
   home/
-    content.ts                  # treści oraz lista realizacji strony głównej
+    content.ts                  # treści sekcji strony głównej
     components/                 # samodzielne sekcje landing page
 public/
   logo.png
-  project/                      # zdjęcia rzeczywistych realizacji
 ```
 
 ## Docelowy Schemat Rozwoju
@@ -52,24 +58,14 @@ app/
     blog/
       page.tsx                  # lista artykułów
       [slug]/page.tsx           # artykuł i metadata SEO
-  (shop)/
-    sklep/
-      page.tsx                  # katalog produktów
-      [slug]/page.tsx           # karta produktu
-    koszyk/page.tsx
-    zamowienie/page.tsx
   api/                          # wyłącznie endpointy wymagane integracjami
 components/
   layout/                       # nagłówki, stopki i shelle tras
   ui/                           # ogólne, małe prymitywy UI bez logiki domeny
 features/
   blog/                         # komponenty, zapytania i modele bloga
-  catalog/                      # produkty, filtry i prezentacja oferty
-  cart/                         # stan oraz operacje koszyka
-  checkout/                     # formularze i proces zamówienia
 lib/
   cms/                          # integracja treści bloga, jeżeli powstanie
-  commerce/                     # źródło produktów, płatności i zamówień
   validation/                   # schematy walidacji danych wejściowych
 types/                          # typy współdzielone między funkcjami
 ```
@@ -79,7 +75,7 @@ types/                          # typy współdzielone między funkcjami
 - `app/` definiuje URL-e, layouty, metadata i składa widoki. Nie przechowuj w
   plikach tras rozbudowanych sekcji JSX ani tablic treści.
 - `features/<feature>/` jest właścicielem komponentów, danych, typów i operacji
-  właściwych dla jednej funkcji, np. strony głównej, bloga lub koszyka.
+  właściwych dla jednej funkcji, np. strony głównej lub bloga.
 - `components/layout/` zawiera elementy wspólne dla wielu tras.
 - `components/ui/` dodawaj dopiero dla elementów rzeczywiście ponownie
   używanych i pozbawionych wiedzy o marce, produkcie lub artykule.
@@ -100,8 +96,9 @@ types/                          # typy współdzielone między funkcjami
   unikaj rozproszonych, niemających uzasadnienia wartości kolorów.
 - Blog powinien otrzymać własny model treści i generowanie metadanych dla
   artykułów; nie mieszaj artykułów z danymi strony głównej.
-- Sklep powinien oddzielać katalog, koszyk i zamówienie. Walidacja ceny,
-  dostępności i danych zamówienia musi działać po stronie serwera.
+- Funkcje sprzedażowe, katalog produktów i druk na zamówienie dodawaj dopiero,
+  gdy projekt ponownie otrzyma taki cel. Nie sugeruj ich w treściach strony
+  blogowej.
 - Sekretów, kluczy płatności i prywatnych danych nigdy nie umieszczaj w kodzie
   klienta ani w `NEXT_PUBLIC_*`.
 
@@ -113,6 +110,3 @@ Po zmianach w interfejsie, routingu lub danych uruchom:
 npm run lint
 npm run build
 ```
-
-Przed wdrożeniem sklepu należy dodatkowo dodać testy krytycznych ścieżek:
-koszyk, kalkulację ceny, formularz zamówienia i integrację płatności.

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Pixel na Warstwie | Braterska pracownia druku 3D",
+  title: "Pixel na Warstwie | Blog o nauce druku 3D",
   description:
-    "Pixel na Warstwie to druk 3D z pasji dwóch braci. Dekoracje, gadżety, praktyczne dodatki i projekty tworzone warstwa po warstwie.",
+    "Pixel na Warstwie to dziennik dwóch braci, którzy uczą się druku 3D, opisują testy, błędy, ustawienia i doświadczenia z warsztatu.",
 };
 
 export default function RootLayout({

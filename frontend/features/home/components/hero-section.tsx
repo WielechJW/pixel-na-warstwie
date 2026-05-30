@@ -10,35 +10,33 @@ export function HeroSection() {
       id="start"
     >
       <div className="pattern-grid absolute inset-0 -z-20 opacity-45" />
-      <div className="absolute -left-24 top-20 -z-10 h-72 w-72 rounded-full bg-brand/18 blur-3xl" />
-      <div className="absolute -right-20 top-8 -z-10 h-80 w-80 rounded-full bg-coral/18 blur-3xl" />
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.04fr_0.96fr]">
         <div>
           <p className="badge mb-7">
             <span className="inline-block h-2.5 w-2.5 rounded-full bg-coral" />
-            Braterska pracownia druku 3D
+            Blog o nauce druku 3D
           </p>
-          <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.98] tracking-tight text-ink sm:text-6xl lg:text-[5rem]">
-            Pomysły nabierają{" "}
+          <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.98] text-ink sm:text-6xl lg:text-[5rem]">
+            Uczymy się druku 3D.{" "}
             <span className="relative inline-block text-brand-dark">
-              kształtu.
+              Notujemy
               <span className="absolute -bottom-1 left-0 -z-10 h-3 w-full -rotate-1 rounded-full bg-sun/80" />
             </span>
             <br />
-            Warstwa po warstwie.
+            każdą warstwę.
           </h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-ink/72 sm:text-xl">
-            Projektujemy i drukujemy wyjątkowe przedmioty 3D: dekoracje,
-            gadżety, praktyczne dodatki i pomysły, które warto zamienić w coś
-            realnego.
+            Pixel na Warstwie to dziennik naszej nauki: opisujemy pierwsze
+            wydruki, ustawienia, pomyłki, poprawki i doświadczenia z domowego
+            warsztatu 3D.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link className="button-primary" href="/#realizacje">
-              Zobacz nasze wydruki
+            <Link className="button-primary" href="/blog">
+              Czytaj dziennik
             </Link>
-            <Link className="button-secondary" href="/#o-nas">
-              Poznaj nas
+            <Link className="button-secondary" href="/#tematy">
+              Zobacz tematy
             </Link>
           </div>
           <div className="mt-12 flex flex-wrap gap-3">
@@ -52,8 +50,8 @@ export function HeroSection() {
 
         <div className="relative mx-auto w-full max-w-[520px]">
           <div className="logo-stage relative rounded-[2.75rem] border-[3px] border-ink bg-mint p-7 sm:p-10">
-            <span className="absolute left-7 top-7 rounded-full border-2 border-ink bg-sun px-4 py-2 text-xs font-black uppercase tracking-[0.18em]">
-              3D printing
+            <span className="absolute left-7 top-7 rounded-full border-2 border-ink bg-sun px-4 py-2 text-xs font-black uppercase">
+              Dziennik warsztatu
             </span>
             <div className="pt-14">
               <Image
@@ -67,10 +65,11 @@ export function HeroSection() {
             </div>
             <div className="mt-7 flex items-center gap-3 rounded-2xl border-2 border-ink/12 bg-white/62 p-4">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-coral font-display text-xl font-bold text-white">
-                3D
+                #1
               </div>
               <p className="text-sm font-semibold leading-6 text-ink/72">
-                Tworzymy rzeczy, które zaczynają się od pomysłu.
+                Zamiast katalogu produktów prowadzimy zapiski z nauki,
+                testów i małych odkryć.
               </p>
             </div>
           </div>

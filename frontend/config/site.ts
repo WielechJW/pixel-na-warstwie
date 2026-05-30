@@ -1,11 +1,20 @@
 export const siteConfig = {
   name: "Pixel na Warstwie",
-  shortDescription: "Druk 3D",
-  tagline: "Druk 3D z pasji. Warstwa po warstwie.",
+  shortDescription: "Blog o druku 3D",
+  tagline: "Uczymy się druku 3D i zapisujemy każdą warstwę doświadczeń.",
+  owner: "Jakub Wielechowski",
+  contactEmail: "pixelnawarstwie@gmail.com",
   navigation: [
     { label: "O nas", href: "/#o-nas" },
-    { label: "Co drukujemy", href: "/#oferta" },
-    { label: "Jak działamy", href: "/#jak-dzialamy" },
-    { label: "Realizacje", href: "/#realizacje" },
+    { label: "Tematy", href: "/#tematy" },
+    { label: "Jak się uczymy", href: "/#jak-sie-uczymy" },
+    { label: "Blog", href: "/blog" },
+    { label: "Kontakt", href: "/kontakt" },
+  ],
+  legalLinks: [
+    { label: "Kontakt", href: "/kontakt" },
+    { label: "Prywatność", href: "/polityka-prywatnosci" },
+    { label: "Cookies", href: "/cookies" },
+    { label: "Zasady", href: "/zasady" },
   ],
 } as const;

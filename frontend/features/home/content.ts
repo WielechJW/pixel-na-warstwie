@@ -3,97 +3,61 @@ type TextCard = {
   text: string;
 };
 
-type Project = {
-  name: string;
-  category: string;
-  image: string;
-  featured?: boolean;
-};
-
 export const heroHighlights = [
-  "Druk na zamówienie",
-  "Kreatywne projekty",
-  "Z pasji",
+  "Pierwsze kroki",
+  "Błędy i poprawki",
+  "Notatki z warsztatu",
 ] as const;
 
-export const services: readonly TextCard[] = [
+export const learningTopics: readonly TextCard[] = [
   {
-    title: "Dekoracje i figurki",
-    text: "Ozdoby, figurki i dodatki, które nadają przestrzeni własny charakter.",
+    title: "Start z drukarką",
+    text: "Pierwsze ustawienia, przygotowanie miejsca pracy i rzeczy, które warto sprawdzić przed pierwszym wydrukiem.",
   },
   {
-    title: "Gadżety i prezenty",
-    text: "Breloki, drobiazgi i personalizowane pomysły na nietypowy upominek.",
+    title: "Kalibracja i slicer",
+    text: "Notatki z poziomowania, temperatur, podpór, prędkości i profili, które testujemy krok po kroku.",
   },
   {
-    title: "Praktyczne akcesoria",
-    text: "Organizery, uchwyty i stojaki tworzone z myślą o codziennym użyciu.",
+    title: "Materiały",
+    text: "PLA, PETG i inne filamenty opisywane prostym językiem: co działa, co nie działa i co nas zaskakuje.",
   },
   {
-    title: "Wydruk z pomysłu",
-    text: "Masz inspirację albo gotowy model? Sprawdzimy, jak zamienić go w wydruk.",
-  },
-];
-
-export const reasons: readonly TextCard[] = [
-  {
-    title: "Pasja do tworzenia",
-    text: "Nie drukujemy anonimowo. Każdy projekt przechodzi przez nasze ręce i oko do detalu.",
-  },
-  {
-    title: "Pomoc w wyborze",
-    text: "Podpowiemy rozmiar, kolor i rozwiązanie, które najlepiej pasuje do pomysłu.",
-  },
-  {
-    title: "Braterska pracownia",
-    text: "Kontaktujesz się bezpośrednio z ludźmi, którzy przygotują Twój projekt.",
+    title: "Błędy wydruków",
+    text: "Krzywe warstwy, nitkowanie, odklejanie i inne lekcje, które lepiej zapisać niż udawać, że ich nie było.",
   },
 ];
 
-export const steps: readonly TextCard[] = [
+export const writingPrinciples: readonly TextCard[] = [
   {
-    title: "Opowiadasz o pomyśle",
-    text: "Wysyłasz inspirację, zdjęcie, opis albo gotowy model 3D.",
+    title: "Piszemy z praktyki",
+    text: "Każdy wpis ma wychodzić z realnego testu, ustawienia albo problemu, który sami próbujemy zrozumieć.",
   },
   {
-    title: "Ustalamy szczegóły",
-    text: "Dobieramy wielkość, kolor, materiał i możliwości wykonania.",
+    title: "Pokazujemy błędy",
+    text: "Nie budujemy katalogu idealnych efektów. Opisujemy też nietrafione próby, bo one uczą najwięcej.",
   },
   {
-    title: "Drukujemy",
-    text: "Twój przedmiot powstaje cierpliwie, warstwa po warstwie.",
-  },
-  {
-    title: "Gotowy efekt",
-    text: "Po sprawdzeniu wydruku ustalamy jego odbiór lub wysyłkę.",
+    title: "Tłumaczymy po ludzku",
+    text: "Chcemy, żeby początkujący mógł wejść w temat bez słownika specjalistycznych skrótów pod ręką.",
   },
 ];
 
-export const projects: readonly Project[] = [
+export const learningSteps: readonly TextCard[] = [
   {
-    name: "Ruchomy szkielet",
-    category: "Figurka kolekcjonerska",
-    image: "/project/skeleton-git.png",
-    featured: true,
+    title: "Wybieramy pytanie",
+    text: "Zaczynamy od konkretu: dlaczego warstwa się odkleiła, czemu pojawiły się nitki albo co zmieni temperatura.",
   },
   {
-    name: "Dinozaur",
-    category: "Model przegubowy",
-    image: "/project/dino-git.png",
+    title: "Robimy test",
+    text: "Zmieniamy jedną rzecz naraz, zapisujemy ustawienia i patrzymy, czy wydruk zachowuje się lepiej.",
   },
   {
-    name: "Skrzydlaty model",
-    category: "Model przegubowy",
-    image: "/project/bird-git.png",
+    title: "Spisujemy wnioski",
+    text: "Zbieramy obserwacje w prostą notatkę: co pomogło, co było bez znaczenia i czego jeszcze nie wiemy.",
   },
   {
-    name: "Front BMW",
-    category: "Dekoracja motoryzacyjna",
-    image: "/project/bmw-git.png",
-  },
-  {
-    name: "Front Opel",
-    category: "Dekoracja motoryzacyjna",
-    image: "/project/opel-git.png",
+    title: "Wracamy do tematu",
+    text: "Jeśli późniejszy test zmieni nasze zdanie, aktualizujemy podejście zamiast udawać, że pierwsza wersja była ostateczna.",
   },
 ];

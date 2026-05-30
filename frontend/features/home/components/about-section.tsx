@@ -5,24 +5,23 @@ export function AboutSection() {
         <div>
           <p className="section-label">O nas</p>
           <h2 className="section-title mt-4">
-            Dwóch braci, jedna pasja i setki warstw pomysłów
+            Dwóch braci, drukarka 3D i dużo pytań po drodze
           </h2>
         </div>
         <div className="rounded-[2rem] border-2 border-ink/10 bg-white p-7 shadow-[8px_8px_0_#d9eee8] sm:p-10">
           <p className="text-lg leading-8 text-ink/78">
-            Pixel na Warstwie powstał z naszej wspólnej zajawki do druku 3D,
-            projektowania i tworzenia rzeczy, które wcześniej istniały tylko w
-            głowie. Eksperymentujemy, dopracowujemy detale i zamieniamy pomysły
-            w namacalne wydruki.
+            Pixel na Warstwie nie jest teraz sklepem ani ofertą druku na
+            zamówienie. To miejsce, w którym porządkujemy naukę druku 3D:
+            zapisujemy, co testujemy, jakie ustawienia sprawdzamy i czego
+            dowiadujemy się z nieudanych prób.
           </p>
           <p className="mt-5 text-lg leading-8 text-ink/78">
-            Dla nas druk 3D to nie tylko technologia. To satysfakcja z procesu,
-            możliwość zrobienia czegoś własnego i radość z każdej udanej
-            warstwy.
+            Chcemy pisać normalnym językiem o rzeczach, które początkującemu
+            potrafią zabrać wieczór: przyczepności pierwszej warstwy, profilach
+            slicera, temperaturach, filamentach i cierpliwości.
           </p>
           <div className="mt-8 border-l-4 border-coral pl-5 font-display text-xl font-bold text-ink">
-            Robimy to po bratersku: z cierpliwością, pomysłami i uwagą do
-            detalu.
+            Nie udajemy ekspertów. Uczymy się publicznie, warstwa po warstwie.
           </div>
         </div>
       </div>
