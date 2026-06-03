@@ -2,65 +2,21 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 
-const consentStorageKey = "pixel-na-warstwie-cookie-consent-v1";
-const openSettingsEvent = "pixel-open-cookie-settings";
-
-type CookieConsentValue = {
-  necessary: true;
-  analytics: boolean;
-  updatedAt: string;
-};
-
-function saveConsent(analytics: boolean) {
-  const consent: CookieConsentValue = {
-    necessary: true,
-    analytics,
-    updatedAt: new Date().toISOString(),
-  };
-
-  window.localStorage.setItem(consentStorageKey, JSON.stringify(consent));
-  window.dispatchEvent(
-    new CustomEvent("pixel-cookie-consent-updated", {
-      detail: consent,
-    }),
-  );
-}
-
-function readConsentSnapshot() {
-  return window.localStorage.getItem(consentStorageKey) ?? "";
-}
-
-function readServerConsentSnapshot() {
-  return "";
-}
-
-function subscribeToConsentChanges(callback: () => void) {
-  window.addEventListener("storage", callback);
-  window.addEventListener("pixel-cookie-consent-updated", callback);
-
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener("pixel-cookie-consent-updated", callback);
-  };
-}
-
-function parseConsent(consentSnapshot: string) {
-  if (!consentSnapshot) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(consentSnapshot) as CookieConsentValue;
-  } catch {
-    return null;
-  }
-}
+import {
+  openCookieSettings,
+  parseCookieConsent,
+  readCookieConsentSnapshot,
+  readServerCookieConsentSnapshot,
+  saveCookieConsent,
+  subscribeToCookieConsentChanges,
+  subscribeToCookieSettingsOpen,
+} from "@/features/legal/cookie-consent";
 
 export function CookieSettingsButton() {
   return (
     <button
       className="nav-link font-bold"
-      onClick={() => window.dispatchEvent(new Event(openSettingsEvent))}
+      onClick={openCookieSettings}
       type="button"
     >
       Ustawienia cookies
@@ -70,25 +26,25 @@ export function CookieSettingsButton() {
 
 export function CookieConsent() {
   const consentSnapshot = useSyncExternalStore(
-    subscribeToConsentChanges,
-    readConsentSnapshot,
-    readServerConsentSnapshot,
+    subscribeToCookieConsentChanges,
+    readCookieConsentSnapshot,
+    readServerCookieConsentSnapshot,
   );
-  const savedConsent = parseConsent(consentSnapshot);
+  const savedConsent = parseCookieConsent(consentSnapshot);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [analyticsDraft, setAnalyticsDraft] = useState<boolean | null>(null);
   const analyticsAccepted = analyticsDraft ?? savedConsent?.analytics ?? false;
   const isVisible = isSettingsOpen || !savedConsent;
 
   useEffect(() => {
-    const openSettings = () => setIsSettingsOpen(true);
-    window.addEventListener(openSettingsEvent, openSettings);
-
-    return () => window.removeEventListener(openSettingsEvent, openSettings);
+    return subscribeToCookieSettingsOpen(() => {
+      setAnalyticsDraft(null);
+      setIsSettingsOpen(true);
+    });
   }, []);
 
   const chooseConsent = (analytics: boolean) => {
-    saveConsent(analytics);
+    saveCookieConsent(analytics);
     setAnalyticsDraft(null);
     setIsSettingsOpen(false);
   };

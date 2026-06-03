@@ -1,3 +1,5 @@
+import { siteConfig } from "@/config/site";
+
 export type LegalSection = {
   title: string;
   paragraphs?: readonly string[];
@@ -5,9 +7,6 @@ export type LegalSection = {
 };
 
 export const legalInfo = {
-  ownerName: "Jakub Wielechowski",
-  contactEmail: "pixelnawarstwie@gmail.com",
-  websiteName: "Pixel na Warstwie",
   hostingProvider: "MyDevil.net",
   lastUpdated: "30 maja 2026",
 } as const;
@@ -16,7 +15,7 @@ export const privacyPolicySections: readonly LegalSection[] = [
   {
     title: "Administrator danych",
     paragraphs: [
-      `Administratorem danych osobowych przetwarzanych w związku z prowadzeniem strony ${legalInfo.websiteName} jest ${legalInfo.ownerName}. Kontakt z administratorem jest możliwy pod adresem e-mail: ${legalInfo.contactEmail}.`,
+      `Administratorem danych osobowych przetwarzanych w związku z prowadzeniem strony ${siteConfig.name} jest ${siteConfig.owner}. Kontakt z administratorem jest możliwy pod adresem e-mail: ${siteConfig.contactEmail}.`,
       "Strona ma obecnie charakter hobbystycznego bloga o nauce druku 3D. Administrator nie prowadzi działalności gospodarczej pod tą marką i nie publikuje na stronie sklepu ani usługi składania zamówień.",
     ],
   },
