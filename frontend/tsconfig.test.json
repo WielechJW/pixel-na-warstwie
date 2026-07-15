@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "noEmit": false,
+    "outDir": ".test-build",
+    "rootDir": ".",
+    "target": "ES2022",
+    "types": ["node"]
+  },
+  "include": [
+    "features/legal/contact-message.ts",
+    "features/legal/cookie-consent.ts",
+    "tests/**/*.test.ts"
+  ],
+  "exclude": ["node_modules", ".next", ".test-build"]
+}

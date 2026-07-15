@@ -105,6 +105,7 @@ a {
 .button-secondary {
   background: white;
   border: 2px solid var(--ink);
+  color: var(--ink);
 }
 
 .button-secondary:hover {

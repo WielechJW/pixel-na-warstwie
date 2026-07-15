@@ -11,24 +11,56 @@ type DeliveryResult =
       ok: false;
     };
 
+type RateLimitBucket = {
+  count: number;
+  windowStartedAt: number;
+};
+
+type PayloadReadResult =
+  | {
+      ok: true;
+      payload: unknown;
+    }
+  | {
+      ok: false;
+      response: Response;
+    };
+
+const contactMaxPayloadBytes = 16 * 1024;
+const contactRateLimitWindowMs = 10 * 60 * 1000;
+const contactRateLimitMaxAttempts = 5;
+const contactRateLimitBuckets = new Map<string, RateLimitBucket>();
+let lastRateLimitCleanupAt = 0;
 const resendApiUrl = "https://api.resend.com/emails";
 
-export async function POST(request: Request) {
-  let payload: unknown;
+class PayloadTooLargeError extends Error {}
 
-  try {
-    payload = await request.json();
-  } catch {
+export async function POST(request: Request) {
+  const payloadResult = await readJsonPayload(request);
+
+  if (!payloadResult.ok) {
+    return payloadResult.response;
+  }
+
+  const rateLimit = checkContactRateLimit(getClientIdentifier(request));
+
+  if (!rateLimit.ok) {
     return Response.json(
       {
         ok: false,
-        message: "Nie udało się odczytać wiadomości. Spróbuj ponownie.",
+        message:
+          "Wysłano zbyt wiele wiadomości. Spróbuj ponownie za kilka minut.",
       },
-      { status: 400 },
+      {
+        headers: {
+          "Retry-After": String(Math.ceil(rateLimit.retryAfterMs / 1000)),
+        },
+        status: 429,
+      },
     );
   }
 
-  const validation = validateContactMessage(payload);
+  const validation = validateContactMessage(payloadResult.payload);
 
   if (!validation.ok) {
     return Response.json(
@@ -68,6 +100,155 @@ export async function POST(request: Request) {
         ? "Wiadomość została przyjęta lokalnie. Jej treść jest w terminalu dev servera."
         : "Dzięki, wiadomość została wysłana.",
   });
+}
+
+async function readJsonPayload(request: Request): Promise<PayloadReadResult> {
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+
+  if (contentLength > contactMaxPayloadBytes) {
+    return {
+      ok: false,
+      response: Response.json(
+        {
+          ok: false,
+          message: "Wiadomość jest zbyt duża. Skróć treść i spróbuj ponownie.",
+        },
+        { status: 413 },
+      ),
+    };
+  }
+
+  try {
+    const text = await readRequestBody(request);
+
+    if (new TextEncoder().encode(text).byteLength > contactMaxPayloadBytes) {
+      return {
+        ok: false,
+        response: Response.json(
+          {
+            ok: false,
+            message:
+              "Wiadomość jest zbyt duża. Skróć treść i spróbuj ponownie.",
+          },
+          { status: 413 },
+        ),
+      };
+    }
+
+    return {
+      ok: true,
+      payload: JSON.parse(text) as unknown,
+    };
+  } catch (error) {
+    if (error instanceof PayloadTooLargeError) {
+      return {
+        ok: false,
+        response: Response.json(
+          {
+            ok: false,
+            message:
+              "Wiadomość jest zbyt duża. Skróć treść i spróbuj ponownie.",
+          },
+          { status: 413 },
+        ),
+      };
+    }
+
+    return {
+      ok: false,
+      response: Response.json(
+        {
+          ok: false,
+          message: "Nie udało się odczytać wiadomości. Spróbuj ponownie.",
+        },
+        { status: 400 },
+      ),
+    };
+  }
+}
+
+async function readRequestBody(request: Request) {
+  if (!request.body) {
+    return "";
+  }
+
+  const reader = request.body.getReader();
+  const decoder = new TextDecoder();
+  const chunks: string[] = [];
+  let bytesRead = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+
+    if (done) {
+      break;
+    }
+
+    bytesRead += value.byteLength;
+
+    if (bytesRead > contactMaxPayloadBytes) {
+      throw new PayloadTooLargeError();
+    }
+
+    chunks.push(decoder.decode(value, { stream: true }));
+  }
+
+  chunks.push(decoder.decode());
+
+  return chunks.join("");
+}
+
+function checkContactRateLimit(clientId: string) {
+  const now = Date.now();
+  cleanupRateLimitBuckets(now);
+
+  const bucket = contactRateLimitBuckets.get(clientId);
+
+  if (!bucket || now - bucket.windowStartedAt >= contactRateLimitWindowMs) {
+    contactRateLimitBuckets.set(clientId, {
+      count: 1,
+      windowStartedAt: now,
+    });
+    return { ok: true as const };
+  }
+
+  if (bucket.count >= contactRateLimitMaxAttempts) {
+    return {
+      ok: false as const,
+      retryAfterMs:
+        contactRateLimitWindowMs - (now - bucket.windowStartedAt),
+    };
+  }
+
+  bucket.count += 1;
+
+  return { ok: true as const };
+}
+
+function cleanupRateLimitBuckets(now: number) {
+  if (now - lastRateLimitCleanupAt < contactRateLimitWindowMs) {
+    return;
+  }
+
+  lastRateLimitCleanupAt = now;
+
+  for (const [clientId, bucket] of contactRateLimitBuckets) {
+    if (now - bucket.windowStartedAt >= contactRateLimitWindowMs) {
+      contactRateLimitBuckets.delete(clientId);
+    }
+  }
+}
+
+function getClientIdentifier(request: Request) {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const forwardedClient = forwardedFor?.split(",")[0]?.trim();
+
+  return (
+    forwardedClient ||
+    request.headers.get("x-real-ip") ||
+    request.headers.get("cf-connecting-ip") ||
+    "unknown-client"
+  );
 }
 
 async function deliverContactMessage(
