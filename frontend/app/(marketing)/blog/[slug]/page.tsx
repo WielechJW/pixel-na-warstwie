@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ArticleDetail } from "@/features/blog/components/article-detail";
-import { blogArticles, getArticleBySlug } from "@/features/blog/content";
+import {
+  getArticleBySlug,
+  getBlogArticleSlugs,
+} from "@/features/blog/content";
 
 type BlogArticlePageProps = {
   params: Promise<{
@@ -11,8 +14,10 @@ type BlogArticlePageProps = {
 };
 
 export async function generateStaticParams() {
-  return blogArticles.map((article) => ({
-    slug: article.slug,
+  const slugs = await getBlogArticleSlugs();
+
+  return slugs.map((slug) => ({
+    slug,
   }));
 }
 
@@ -20,7 +25,7 @@ export async function generateMetadata({
   params,
 }: BlogArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
     return {
@@ -38,7 +43,7 @@ export default async function BlogArticlePage({
   params,
 }: BlogArticlePageProps) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
     notFound();

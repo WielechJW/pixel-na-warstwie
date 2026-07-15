@@ -1,9 +1,10 @@
 import Link from "next/link";
 
-import { blogArticles, formatArticleDate } from "@/features/blog/content";
+import { formatArticleDate, getBlogArticles } from "@/features/blog/content";
 
-export function LatestArticlesSection() {
-  const latestArticles = blogArticles.slice(0, 3);
+export async function LatestArticlesSection() {
+  const articles = await getBlogArticles();
+  const latestArticles = articles.slice(0, 3);
 
   return (
     <section className="px-5 py-20 sm:px-8 lg:px-12 lg:py-28" id="notatki">

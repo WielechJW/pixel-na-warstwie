@@ -12,8 +12,14 @@ npm run dev
 
 Otwórz [http://localhost:3000](http://localhost:3000).
 
-Główna strona jest w `app/(marketing)/page.tsx`, a wpisy blogowe mają dane w
-`features/blog/content.ts`.
+Główna strona jest w `app/(marketing)/page.tsx`. Blog może czytać dane z
+Payload CMS, jeżeli ustawisz:
+
+```env
+CMS_URL=http://localhost:3001
+```
+
+Bez `CMS_URL` frontend używa lokalnych wpisów z `features/blog/content.ts`.
 
 ## Do zrobienia następnego dnia
 

@@ -109,8 +109,50 @@ export const blogArticles = [
   },
 ] as const satisfies readonly BlogArticle[];
 
-export function getArticleBySlug(slug: string) {
-  return blogArticles.find((article) => article.slug === slug) ?? null;
+type CmsRelationship =
+  | {
+      name?: unknown;
+      slug?: unknown;
+    }
+  | number
+  | string
+  | null
+  | undefined;
+
+type CmsPost = {
+  category?: CmsRelationship;
+  description?: unknown;
+  publishedAt?: unknown;
+  readingTime?: unknown;
+  sections?: unknown;
+  slug?: unknown;
+  tags?: unknown;
+  takeaways?: unknown;
+  title?: unknown;
+};
+
+type CmsPostsResponse = {
+  docs?: unknown;
+};
+
+const cmsArticlesRevalidateSeconds = 60;
+
+export async function getBlogArticles(): Promise<readonly BlogArticle[]> {
+  const cmsArticles = await fetchCmsBlogArticles();
+
+  return cmsArticles ?? blogArticles;
+}
+
+export async function getBlogArticleSlugs() {
+  const articles = await getBlogArticles();
+
+  return articles.map((article) => article.slug);
+}
+
+export async function getArticleBySlug(slug: string) {
+  const articles = await getBlogArticles();
+
+  return articles.find((article) => article.slug === slug) ?? null;
 }
 
 export function formatArticleDate(date: string) {
@@ -119,4 +161,141 @@ export function formatArticleDate(date: string) {
     month: "long",
     year: "numeric",
   }).format(new Date(date));
+}
+
+async function fetchCmsBlogArticles(): Promise<BlogArticle[] | null> {
+  const cmsUrl = process.env.CMS_URL;
+
+  if (!cmsUrl) {
+    return null;
+  }
+
+  try {
+    const postsUrl = new URL("/api/posts", cmsUrl);
+    postsUrl.searchParams.set("depth", "2");
+    postsUrl.searchParams.set("limit", "100");
+    postsUrl.searchParams.set("sort", "-publishedAt");
+    postsUrl.searchParams.set("where[status][equals]", "published");
+
+    const response = await fetch(postsUrl, {
+      next: {
+        revalidate: cmsArticlesRevalidateSeconds,
+      },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const payload = (await response.json()) as CmsPostsResponse;
+
+    if (!Array.isArray(payload.docs)) {
+      return null;
+    }
+
+    return payload.docs
+      .map((post) => mapCmsPostToArticle(post))
+      .filter((article): article is BlogArticle => article !== null);
+  } catch {
+    return null;
+  }
+}
+
+function mapCmsPostToArticle(post: unknown): BlogArticle | null {
+  if (!isRecord(post)) {
+    return null;
+  }
+
+  const cmsPost = post as CmsPost;
+  const slug = readString(cmsPost.slug);
+  const title = readString(cmsPost.title);
+  const description = readString(cmsPost.description);
+  const publishedAt = readString(cmsPost.publishedAt);
+  const readingTime = readString(cmsPost.readingTime);
+
+  if (!slug || !title || !description || !publishedAt || !readingTime) {
+    return null;
+  }
+
+  return {
+    category: readRelationshipName(cmsPost.category) ?? "Blog",
+    description,
+    publishedAt,
+    readingTime,
+    sections: readCmsSections(cmsPost.sections),
+    slug,
+    tags: readCmsTags(cmsPost.tags),
+    takeaways: readCmsTakeaways(cmsPost.takeaways),
+    title,
+  };
+}
+
+function readCmsSections(value: unknown): BlogArticle["sections"] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  const sections: BlogArticle["sections"][number][] = [];
+
+  for (const section of value) {
+    if (!isRecord(section)) {
+      continue;
+    }
+
+    const heading = readString(section.heading);
+    const paragraphs = Array.isArray(section.paragraphs)
+      ? section.paragraphs
+          .map((paragraph) =>
+            isRecord(paragraph) ? readString(paragraph.text) : "",
+          )
+          .filter(Boolean)
+      : [];
+
+    if (!heading || paragraphs.length === 0) {
+      continue;
+    }
+
+    sections.push({
+      heading,
+      paragraphs,
+    });
+  }
+
+  return sections;
+}
+
+function readCmsTakeaways(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((takeaway) => (isRecord(takeaway) ? readString(takeaway.text) : ""))
+    .filter(Boolean);
+}
+
+function readCmsTags(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((tag) => readRelationshipName(tag))
+    .filter((tag): tag is string => Boolean(tag));
+}
+
+function readRelationshipName(value: CmsRelationship) {
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  return readString(value.name) || readString(value.slug) || null;
+}
+
+function readString(value: unknown) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
 }

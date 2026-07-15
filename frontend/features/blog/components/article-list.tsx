@@ -1,8 +1,10 @@
 import Link from "next/link";
 
-import { blogArticles, formatArticleDate } from "@/features/blog/content";
+import { formatArticleDate, getBlogArticles } from "@/features/blog/content";
 
-export function ArticleList() {
+export async function ArticleList() {
+  const articles = await getBlogArticles();
+
   return (
     <section className="px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
       <div className="mx-auto max-w-7xl">
@@ -18,7 +20,7 @@ export function ArticleList() {
         </div>
 
         <div className="mt-12 grid gap-5 md:grid-cols-2">
-          {blogArticles.map((article) => (
+          {articles.map((article) => (
             <article
               className="rounded-[2rem] border-2 border-ink/10 bg-white p-7 shadow-[6px_6px_0_#e4f5ef]"
               key={article.slug}

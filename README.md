@@ -1,5 +1,49 @@
-# Pixel na warstwie
+# Pixel na Warstwie
 
-Tworzymy z pasją, warstwa po warstwie.
+Strona i CMS dla bloga o nauce druku 3D.
 
-Nowoczesna platforma dla studia druku 3D budowana w oparciu o Next.js, Strapi i Docker.
+## Struktura
+
+```text
+frontend/          Publiczna strona Next.js
+cms/               Payload CMS dla bloga, mediów, kategorii i tagów
+docker-compose.yml Lokalny Postgres dla CMS-a
+```
+
+## Lokalny Start
+
+Uruchom bazę:
+
+```bash
+docker compose up -d postgres
+```
+
+Uruchom CMS:
+
+```bash
+cd cms
+npm run dev
+```
+
+CMS działa pod:
+
+- http://localhost:3001
+- http://localhost:3001/admin
+
+Uruchom frontend:
+
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend działa pod http://localhost:3000.
+
+Żeby frontend czytał wpisy z CMS-a, ustaw w `frontend/.env.local`:
+
+```env
+CMS_URL=http://localhost:3001
+```
+
+Jeżeli `CMS_URL` nie jest ustawione albo CMS jest niedostępny, frontend używa
+lokalnych wpisów z `frontend/features/blog/content.ts`.
