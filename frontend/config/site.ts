@@ -1,5 +1,6 @@
 export const siteConfig = {
   name: "Pixel na Warstwie",
+  url: "https://pixelnawarstwie.pl",
   shortDescription: "Blog o druku 3D",
   tagline: "Uczymy się druku 3D i zapisujemy każdą warstwę doświadczeń.",
   owner: "Jakub Wielechowski",
