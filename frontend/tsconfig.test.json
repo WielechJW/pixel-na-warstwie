@@ -9,10 +9,9 @@
     "outDir": ".test-build",
     "rootDir": ".",
     "target": "ES2022",
-    "types": ["node"]
+    "types": ["node", "next"]
   },
   "include": [
-    "next-env.d.ts",
     "features/legal/contact-message.ts",
     "features/legal/cookie-consent.ts",
     "tests/**/*.test.ts"
