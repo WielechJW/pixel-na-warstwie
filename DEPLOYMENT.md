@@ -42,8 +42,10 @@ Weryfikacja lokalna po poprawkach:
 1. Node.js 22.17+ (zalecana aktualna poprawka 22.x), npm i PostgreSQL.
    Frontend i CMS to dwa odrębne procesy. Ustaw HTTPS i reverse proxy dla obu.
 2. Frontend: `SITE_URL=https://pixelnawarstwie.pl`, `CMS_URL` wskazujący działający
-   CMS, `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` z domeny zweryfikowanej w Resend,
-   opcjonalnie `CONTACT_TO_EMAIL`. Bez konfiguracji poczty formularz zwraca 503.
+   CMS i konfiguracja poczty z [frontend/SMTP.md](frontend/SMTP.md).
+   Alternatywnie można użyć `RESEND_API_KEY` i `CONTACT_FROM_EMAIL` z domeny
+   zweryfikowanej w Resend. `CONTACT_TO_EMAIL` wybiera odbiorcę.
+   Bez konfiguracji poczty formularz zwraca 503.
    Nie wpisuj sekretów do `NEXT_PUBLIC_*` ani do repozytorium.
 3. CMS: `DATABASE_URL`, silny losowy `PAYLOAD_SECRET`,
    `PAYLOAD_PUBLIC_SERVER_URL` jako publiczny adres HTTPS panelu,
