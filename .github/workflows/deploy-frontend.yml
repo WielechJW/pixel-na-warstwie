@@ -5,8 +5,19 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-frontend-production
+  cancel-in-progress: false
+
 jobs:
+  checks:
+    uses: ./.github/workflows/check.yml
+
   deploy:
+    needs: checks
     runs-on: ubuntu-latest
 
     defaults:
@@ -29,9 +40,14 @@ jobs:
 
       - name: Build frontend
         run: npm run build
+        env:
+          SITE_URL: https://pixelnawarstwie.pl
+
+      - name: Check frontend
+        run: npm run lint && npm test
 
       - name: Pack build
-        run: tar -czf next-build.tar.gz .next package.json package-lock.json
+        run: tar --exclude='.next/cache' -czf next-build.tar.gz .next public next.config.mjs package.json package-lock.json
 
       - name: Upload build to server
         uses: appleboy/scp-action@v1
@@ -50,12 +66,28 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: DEPLOY_PATH
           script: |
-            cd ${{ secrets.DEPLOY_PATH }}
-
-            rm -rf .next public package.json package-lock.json
-            tar -xzf frontend/next-build.tar.gz
-            rm -rf frontend
-            npm install --omit=dev
-
+            set -eu
+            case "$DEPLOY_PATH" in /*) ;; *) echo "DEPLOY_PATH must be absolute"; exit 1;; esac
+            test "$DEPLOY_PATH" != /
+            cd "$DEPLOY_PATH"
+            test -f frontend/next-build.tar.gz
+            stage=$(mktemp -d "$DEPLOY_PATH/.deploy-stage.XXXXXX")
+            tar -xzf frontend/next-build.tar.gz -C "$stage"
+            test -f "$stage/.next/BUILD_ID"
+            test -f "$stage/public/logo.png"
+            (cd "$stage" && npm ci --omit=dev)
+            backup=$(mktemp -d "$DEPLOY_PATH/.deploy-backup.XXXXXX")
+            echo "Previous release backup: $backup"
+            for item in .next public node_modules package.json package-lock.json next.config.mjs next.config.ts; do
+              if [ -e "$item" ]; then mv "$item" "$backup/"; fi
+            done
+            for item in .next public node_modules package.json package-lock.json next.config.mjs; do
+              mv "$stage/$item" .
+            done
+            rmdir "$stage"
             devil www restart pixelnawarstwie.pl
+            echo "Previous release: $backup"
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
