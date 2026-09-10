@@ -187,6 +187,7 @@ async function readRequestBody(request: Request) {
     bytesRead += value.byteLength;
 
     if (bytesRead > contactMaxPayloadBytes) {
+      await reader.cancel();
       throw new PayloadTooLargeError();
     }
 
@@ -291,6 +292,7 @@ async function sendWithResend({
 }): Promise<DeliveryResult> {
   try {
     const response = await fetch(resendApiUrl, {
+      signal: AbortSignal.timeout(10_000),
       body: JSON.stringify({
         from: fromEmail,
         html: formatEmailHtml(message),

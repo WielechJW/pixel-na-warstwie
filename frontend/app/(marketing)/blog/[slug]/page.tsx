@@ -36,6 +36,16 @@ export async function generateMetadata({
   return {
     title: `${article.title} | Pixel na Warstwie`,
     description: article.description,
+    alternates: { canonical: `/blog/${article.slug}` },
+    openGraph: {
+      type: "article",
+      locale: "pl_PL",
+      title: article.title,
+      description: article.description,
+      url: `/blog/${article.slug}`,
+      publishedTime: article.publishedAt,
+      tags: [...article.tags],
+    },
   };
 }
 

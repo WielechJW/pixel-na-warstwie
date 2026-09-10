@@ -12,5 +12,8 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    staticDir: process.env.MEDIA_DIR || 'media',
+    mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
+  },
 }

@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+export const revalidate = 60;
+
 import { getAbsoluteSiteUrl } from "@/config/site-url";
 import { getBlogArticles } from "@/features/blog/content";
 

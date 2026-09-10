@@ -133,6 +133,7 @@ type CmsPost = {
 
 type CmsPostsResponse = {
   docs?: unknown;
+  hasNextPage?: boolean;
 };
 
 const cmsArticlesRevalidateSeconds = 60;
@@ -177,27 +178,26 @@ async function fetchCmsBlogArticles(): Promise<BlogArticle[] | null> {
     postsUrl.searchParams.set("sort", "-publishedAt");
     postsUrl.searchParams.set("where[status][equals]", "published");
 
-    const response = await fetch(postsUrl, {
-      next: {
-        revalidate: cmsArticlesRevalidateSeconds,
-      },
-    });
-
-    if (!response.ok) {
-      return null;
+    const articles: BlogArticle[] = [];
+    for (let page = 1; ; page += 1) {
+      postsUrl.searchParams.set("page", String(page));
+      const response = await fetch(postsUrl, {
+        signal: AbortSignal.timeout(5_000),
+        next: { revalidate: cmsArticlesRevalidateSeconds },
+      });
+      if (!response.ok) throw new Error(`CMS returned HTTP ${response.status}`);
+      const payload = (await response.json()) as CmsPostsResponse;
+      if (!Array.isArray(payload.docs)) throw new Error("Invalid CMS response");
+      articles.push(...payload.docs
+        .map((post) => mapCmsPostToArticle(post))
+        .filter((article): article is BlogArticle => article !== null));
+      if (!payload.hasNextPage) return articles;
+      if (payload.docs.length === 0) throw new Error("Invalid CMS pagination");
     }
-
-    const payload = (await response.json()) as CmsPostsResponse;
-
-    if (!Array.isArray(payload.docs)) {
-      return null;
-    }
-
-    return payload.docs
-      .map((post) => mapCmsPostToArticle(post))
-      .filter((article): article is BlogArticle => article !== null);
-  } catch {
-    return null;
+  } catch (error) {
+    // Throwing lets ISR retain the last successful page instead of publishing
+    // bundled demo content over real posts during a CMS outage.
+    throw new Error("Nie udało się pobrać wpisów z CMS-a.", { cause: error });
   }
 }
 
@@ -213,7 +213,9 @@ function mapCmsPostToArticle(post: unknown): BlogArticle | null {
   const publishedAt = readString(cmsPost.publishedAt);
   const readingTime = readString(cmsPost.readingTime);
 
-  if (!slug || !title || !description || !publishedAt || !readingTime) {
+  if (!slug || !title || !description || !publishedAt || !readingTime ||
+      !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) ||
+      !Number.isFinite(Date.parse(publishedAt))) {
     return null;
   }
 

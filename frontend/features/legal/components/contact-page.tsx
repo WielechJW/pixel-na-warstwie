@@ -6,8 +6,8 @@ import { ContactForm } from "@/features/legal/components/contact-form";
 export function ContactPageContent() {
   return (
     <main className="px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.82fr_1.18fr]">
-        <div>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
+        <div className="min-w-0">
           <p className="section-label">Kontakt</p>
           <h1 className="mt-4 font-display text-5xl font-bold leading-none text-ink sm:text-6xl">
             Napisz o pytaniu, pomyśle albo współpracy

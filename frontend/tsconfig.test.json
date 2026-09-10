@@ -12,6 +12,7 @@
     "types": ["node"]
   },
   "include": [
+    "next-env.d.ts",
     "features/legal/contact-message.ts",
     "features/legal/cookie-consent.ts",
     "tests/**/*.test.ts"

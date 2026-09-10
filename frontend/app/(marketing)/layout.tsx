@@ -16,3 +16,4 @@ export default function MarketingLayout({
     </div>
   );
 }
+export const revalidate = 60;

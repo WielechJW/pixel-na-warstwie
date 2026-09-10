@@ -40,6 +40,7 @@ export const privacyPolicySections: readonly LegalSection[] = [
     title: "Odbiorcy danych",
     paragraphs: [
       `Strona będzie hostowana u dostawcy ${legalInfo.hostingProvider}, który może przetwarzać dane techniczne w ramach świadczenia hostingu i utrzymania serwera.`,
+      "Wysyłkę wiadomości z formularza kontaktowego obsługuje usługa Resend. W tym celu otrzymuje imię, adres e-mail oraz treść i temat wiadomości.",
       "Po wdrożeniu narzędzi Google odbiorcą części danych może być Google Ireland Limited oraz podmioty z grupy Google, zgodnie z zasadami usług Google. Takie narzędzia powinny być uruchamiane dopiero po uzyskaniu odpowiedniej zgody użytkownika.",
     ],
   },

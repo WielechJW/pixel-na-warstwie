@@ -22,6 +22,8 @@ Uruchom CMS:
 
 ```bash
 cd cms
+npm ci
+cp .env.example .env
 npm run dev
 ```
 
@@ -34,6 +36,7 @@ Uruchom frontend:
 
 ```bash
 cd frontend
+npm ci
 npm run dev
 ```
 
@@ -45,5 +48,8 @@ Frontend działa pod http://localhost:3000.
 CMS_URL=http://localhost:3001
 ```
 
-Jeżeli `CMS_URL` nie jest ustawione albo CMS jest niedostępny, frontend używa
-lokalnych wpisów z `frontend/features/blog/content.ts`.
+Jeżeli `CMS_URL` nie jest ustawione, frontend używa lokalnych wpisów z
+`frontend/features/blog/content.ts`. Gdy skonfigurowany CMS jest niedostępny,
+odświeżanie zgłasza błąd i zachowuje ostatnią poprawnie wygenerowaną stronę.
+
+Instrukcja produkcyjna i wynik przeglądu: [DEPLOYMENT.md](DEPLOYMENT.md).

@@ -28,6 +28,10 @@ export const Posts: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
+      validate: (value: unknown) =>
+        typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)
+          ? true
+          : 'Użyj małych liter a-z, cyfr i pojedynczych myślników.',
       admin: {
         position: 'sidebar',
       },

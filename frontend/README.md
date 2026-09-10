@@ -21,7 +21,7 @@ CMS_URL=http://localhost:3001
 
 Bez `CMS_URL` frontend używa lokalnych wpisów z `features/blog/content.ts`.
 
-## Do zrobienia następnego dnia
+## Konfiguracja przed publikacją
 
 - Skonfigurować wysyłkę formularza kontaktowego na produkcji:
   formularz wysyła dane do `app/api/contact/route.ts`. Lokalnie bez konfiguracji
@@ -39,5 +39,10 @@ Bez `CMS_URL` frontend używa lokalnych wpisów z `features/blog/content.ts`.
 
 ```bash
 npm run lint
+npm test
 npm run build
 ```
+
+Przykładowe zmienne są w `.env.example`. Wdrożenie wymaga Node.js 22 lub
+nowszego i procesu Next.js — formularz kontaktowy nie działa jako statyczny HTML.
+Szczegóły wdrożenia i ograniczenia: [../DEPLOYMENT.md](../DEPLOYMENT.md).

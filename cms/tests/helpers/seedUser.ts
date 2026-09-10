@@ -2,8 +2,8 @@ import { getPayload } from 'payload'
 import config from '../../src/payload.config.js'
 
 export const testUser = {
-  email: 'dev@payloadcms.com',
-  password: 'test',
+  email: `e2e-${process.pid}@example.test`,
+  password: 'local-e2e-only-password-123',
 }
 
 /**
@@ -27,6 +27,7 @@ export async function seedTestUser(): Promise<void> {
     collection: 'users',
     data: testUser,
   })
+
 }
 
 /**
@@ -43,4 +44,5 @@ export async function cleanupTestUser(): Promise<void> {
       },
     },
   })
+  await payload.destroy()
 }
