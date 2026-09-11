@@ -1,14 +1,11 @@
 import { siteConfig } from "@/config/site";
 import type { ContactMessage } from "@/features/legal/contact-message";
 import { validateContactMessage } from "@/features/legal/contact-message";
-import { getSmtpOptions, sendSmtpEmail } from "@/lib/email/smtp";
-
-export const runtime = "nodejs";
 
 type DeliveryResult =
   | {
       ok: true;
-      mode: "development" | "resend" | "smtp";
+      mode: "development" | "resend";
     }
   | {
       ok: false;
@@ -262,31 +259,6 @@ async function deliverContactMessage(
   const fromEmail = process.env.CONTACT_FROM_EMAIL;
   const toEmail = process.env.CONTACT_TO_EMAIL ?? siteConfig.contactEmail;
 
-  // An explicitly configured SMTP account takes priority over Resend.
-  // Never fall back to another provider after an SMTP failure (duplicate mail).
-  if (process.env.SMTP_HOST || process.env.SMTP_USER || process.env.SMTP_PASSWORD) {
-    try {
-      const options = getSmtpOptions(process.env);
-      await sendSmtpEmail(options, {
-        from: fromEmail?.trim() || process.env.SMTP_USER!.trim(),
-        to: toEmail,
-        replyTo: message.email,
-        subject: `Pixel na Warstwie: ${message.subject}`,
-        text: formatEmailText(message),
-        html: formatEmailHtml(message),
-      });
-      return { ok: true, mode: "smtp" };
-    } catch (error) {
-      // Do not log credentials, message contents or raw SMTP responses.
-      const smtpError = error as { code?: string; responseCode?: number };
-      console.error("Contact SMTP delivery failed", {
-        code: smtpError.code ?? "SMTP_CONFIG_OR_DELIVERY_ERROR",
-        responseCode: smtpError.responseCode,
-      });
-      return { ok: false };
-    }
-  }
-
   if (apiKey && fromEmail) {
     return sendWithResend({
       apiKey,
@@ -302,7 +274,7 @@ async function deliverContactMessage(
   }
 
   console.error(
-    "Contact form delivery is not configured. Set SMTP_HOST, SMTP_USER and SMTP_PASSWORD, or RESEND_API_KEY and CONTACT_FROM_EMAIL.",
+    "Contact form delivery is not configured. Set RESEND_API_KEY and CONTACT_FROM_EMAIL.",
   );
   return { ok: false };
 }

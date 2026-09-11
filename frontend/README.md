@@ -23,9 +23,6 @@ Bez `CMS_URL` frontend używa lokalnych wpisów z `features/blog/content.ts`.
 
 ## Konfiguracja przed publikacją
 
-Wysyłka przez skrzynkę `kontakt@pixelnawarstwie.pl` na MyDevil:
-[instrukcja SMTP](SMTP.md). Ten wariant nie wymaga Resend.
-
 - Skonfigurować wysyłkę formularza kontaktowego na produkcji:
   formularz wysyła dane do `app/api/contact/route.ts`. Lokalnie bez konfiguracji
   mail providerów wiadomość jest przyjmowana i wypisywana w terminalu dev
