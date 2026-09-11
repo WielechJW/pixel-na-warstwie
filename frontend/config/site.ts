@@ -4,7 +4,7 @@ export const siteConfig = {
   shortDescription: "Blog o druku 3D",
   tagline: "Uczymy się druku 3D i zapisujemy każdą warstwę doświadczeń.",
   owner: "Jakub Wielechowski",
-  contactEmail: "pixelnawarstwie@gmail.com",
+  contactEmail: "kontakt@pixelnawarstwie.pl",
   navigation: [
     { label: "O nas", href: "/#o-nas" },
     { label: "Tematy", href: "/#tematy" },
