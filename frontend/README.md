@@ -26,8 +26,10 @@ Bez `CMS_URL` frontend używa lokalnych wpisów z `features/blog/content.ts`.
 - Skonfigurować wysyłkę formularza kontaktowego na produkcji:
   formularz wysyła dane do `app/api/contact/route.ts`. Lokalnie bez konfiguracji
   mail providerów wiadomość jest przyjmowana i wypisywana w terminalu dev
-  servera. Do prawdziwej wysyłki ustaw po stronie serwera `RESEND_API_KEY`,
-  `CONTACT_FROM_EMAIL` oraz opcjonalnie `CONTACT_TO_EMAIL`.
+  servera. Do prawdziwej wysyłki ustaw po stronie serwera
+  `PIXEL_NA_WARSTWIE_RESEND_API_KEY`,
+  `PIXEL_NA_WARSTWIE_CONTACT_FROM_EMAIL` oraz opcjonalnie
+  `PIXEL_NA_WARSTWIE_CONTACT_TO_EMAIL`.
 - Podpiąć Google Analytics i Google Tag Manager:
   logika zgody jest w `features/legal/cookie-consent.ts`. Komponenty tagów
   powinny sprawdzać zgodę przez `hasAnalyticsConsent()` i reagować na zmiany

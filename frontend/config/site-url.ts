@@ -2,7 +2,7 @@ import { siteConfig } from "@/config/site";
 
 export function getSiteUrl() {
   const configuredUrl =
-    process.env.SITE_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.url;
+    process.env.PIXEL_NA_WARSTWIE_SITE_URL ?? siteConfig.url;
   const urlWithProtocol = configuredUrl.startsWith("http")
     ? configuredUrl
     : `https://${configuredUrl}`;

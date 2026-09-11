@@ -255,9 +255,10 @@ function getClientIdentifier(request: Request) {
 async function deliverContactMessage(
   message: ContactMessage,
 ): Promise<DeliveryResult> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.CONTACT_FROM_EMAIL;
-  const toEmail = process.env.CONTACT_TO_EMAIL ?? siteConfig.contactEmail;
+  const apiKey = process.env.PIXEL_NA_WARSTWIE_RESEND_API_KEY;
+  const fromEmail = process.env.PIXEL_NA_WARSTWIE_CONTACT_FROM_EMAIL;
+  const toEmail =
+    process.env.PIXEL_NA_WARSTWIE_CONTACT_TO_EMAIL ?? siteConfig.contactEmail;
 
   if (apiKey && fromEmail) {
     return sendWithResend({
@@ -274,7 +275,7 @@ async function deliverContactMessage(
   }
 
   console.error(
-    "Contact form delivery is not configured. Set RESEND_API_KEY and CONTACT_FROM_EMAIL.",
+    "Contact form delivery is not configured. Set PIXEL_NA_WARSTWIE_RESEND_API_KEY and PIXEL_NA_WARSTWIE_CONTACT_FROM_EMAIL.",
   );
   return { ok: false };
 }
