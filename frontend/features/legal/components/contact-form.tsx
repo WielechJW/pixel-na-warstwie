@@ -28,7 +28,7 @@ const initialFormState: ContactFormState = {
 };
 
 const inputClassName =
-  "mt-2.5 w-full rounded-xl border border-ink/12 bg-cream/35 px-4 py-3.5 text-base text-ink outline-none transition-[border-color,background-color,box-shadow] placeholder:text-ink/30 hover:border-ink/25 focus:border-brand-dark focus:bg-white focus:ring-4 focus:ring-brand/10 disabled:cursor-wait disabled:opacity-60 aria-invalid:border-error";
+  "mt-2.5 w-full rounded-xl border border-ink/12 bg-cream/35 px-4 py-3.5 text-base text-ink outline-none transition-[border-color,background-color,box-shadow] placeholder:text-muted hover:border-ink/25 focus:border-brand-dark focus:bg-white focus:ring-4 focus:ring-brand/10 disabled:cursor-wait disabled:opacity-60 aria-invalid:border-error";
 
 export function ContactForm() {
   const [form, setForm] = useState(initialFormState);
@@ -108,7 +108,7 @@ export function ContactForm() {
         <h2 className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           Zostaw wiadomość
         </h2>
-        <p className="mt-2 text-sm leading-6 text-ink/50">
+        <p className="mt-2 text-sm leading-6 text-muted">
           Kilka słów wystarczy, żeby zacząć. Wszystkie pola są wymagane.
         </p>
       </div>
@@ -205,7 +205,7 @@ export function ContactForm() {
         <FieldError id="contact-message-error" message={fieldErrors.message} />
       </label>
 
-      <label className="mt-6 flex cursor-pointer items-start gap-3 text-xs leading-6 text-ink/60 sm:text-sm">
+      <label className="mt-6 flex cursor-pointer items-start gap-3 text-xs leading-6 text-muted sm:text-sm">
         <input
           aria-describedby={
             fieldErrors.privacyAccepted ? "contact-privacy-error" : undefined

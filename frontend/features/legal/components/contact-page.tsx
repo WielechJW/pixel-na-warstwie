@@ -23,7 +23,7 @@ export function ContactPageContent() {
               Dobre pomysły zaczynają się od{" "}
               <span className="text-brand-dark">rozmowy.</span>
             </h1>
-            <p className="mt-6 max-w-lg text-base leading-8 text-ink/65 sm:text-lg">
+            <p className="mt-6 max-w-lg text-base leading-8 text-muted sm:text-lg">
               Pytanie o druk 3D, pomysł na kolejny test, a może współpraca? Napisz
               przez formularz lub bezpośrednio na e-mail.
             </p>
@@ -32,7 +32,7 @@ export function ContactPageContent() {
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-brand-dark">
                 <Icon name="mail" className="h-5 w-5" />
               </div>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-ink/50">
+              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
                 Wolisz napisać maila?
               </p>
               <Link
@@ -45,14 +45,14 @@ export function ContactPageContent() {
                   className="h-5 w-5 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 />
               </Link>
-              <p className="mt-4 text-sm leading-6 text-ink/60">
+              <p className="mt-4 text-sm leading-6 text-muted">
                 To hobbystyczny blog, więc odpowiedź może nie przyjść od razu.
                 Twoje pytania i wskazówki pomagają znaleźć tematy kolejnych
                 eksperymentów.
               </p>
             </div>
 
-            <div className="mt-7 flex items-start gap-3 text-sm leading-6 text-ink/50">
+            <div className="mt-7 flex items-start gap-3 text-sm leading-6 text-muted">
               <Icon
                 name="message"
                 className="mt-1 h-4 w-4 shrink-0 text-brand-dark"

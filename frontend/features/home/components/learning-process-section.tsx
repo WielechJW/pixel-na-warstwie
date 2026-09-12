@@ -10,7 +10,7 @@ function LayerStudy() {
           <Icon className="h-4 w-4 text-brand" name="layers" />
           Z notatnika warsztatu
         </span>
-        <span className="font-mono text-[9px] tracking-[0.15em] text-cream/50">
+        <span className="font-mono text-[9px] tracking-[0.15em] text-cream/65">
           ILUSTRACJA
         </span>
       </div>
@@ -63,12 +63,12 @@ function LayerStudy() {
           ["Podejście", "Jedna zmiana"],
         ].map(([label, value], index) => (
           <div className={`px-4 py-4 sm:px-5 ${index > 0 ? "border-l border-cream/10" : ""}`} key={label}>
-            <p className="text-[10px] text-cream/50">{label}</p>
+            <p className="text-[10px] text-cream/65">{label}</p>
             <p className="mt-1.5 text-xs font-medium text-cream/90">{value}</p>
           </div>
         ))}
       </div>
-      <p className="border-t border-cream/10 px-5 py-3 text-[10px] leading-4 text-cream/45">
+      <p className="border-t border-cream/10 px-5 py-3 text-[10px] leading-4 text-cream/65">
         Przykład zapisu ustawień podczas testu.
       </p>
     </div>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { MobileNavigation } from "@/components/layout/mobile-navigation";
+import { NavigationLink } from "@/components/layout/navigation-link";
 import { Icon } from "@/components/ui/icon";
 import { siteConfig } from "@/config/site";
 
@@ -17,7 +18,7 @@ export function SiteHeader() {
           </span>
         </Link>
         <div className="hidden items-center gap-7 text-xs font-semibold lg:flex">
-          {siteConfig.navigation.map((item) => <Link className="nav-link" href={item.href} key={item.href}>{item.label}</Link>)}
+          {siteConfig.navigation.map((item) => <NavigationLink className="nav-link" href={item.href} key={item.href}>{item.label}</NavigationLink>)}
         </div>
         <div className="flex items-center gap-3">
           <Link className="button-primary hidden sm:inline-flex" href="/blog">Wpadnij na blog <Icon name="arrow-up-right" className="h-4 w-4" /></Link>

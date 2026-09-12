@@ -30,7 +30,7 @@ export function PrinciplesSection() {
                 <h3 className="font-display text-xl font-semibold tracking-[-0.035em] sm:text-[1.35rem]">
                   {principle.title}
                 </h3>
-                <p className="mt-3 max-w-sm text-sm leading-7 text-ink/65">
+                <p className="mt-3 max-w-sm text-sm leading-7 text-muted">
                   {principle.text}
                 </p>
               </article>

@@ -23,10 +23,10 @@ export function LegalPage({ eyebrow, title, intro, sections }: LegalPageProps) {
           </Link>
           <p className="section-label">{eyebrow}</p>
           <h1 className="page-title mt-5">{title}</h1>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-ink/65 sm:text-lg">
+          <p className="mt-6 max-w-2xl text-base leading-8 text-muted sm:text-lg">
             {intro}
           </p>
-          <p className="mt-6 flex items-center gap-2 text-xs font-medium text-ink/45 sm:text-sm">
+          <p className="mt-6 flex items-center gap-2 text-xs font-medium text-muted sm:text-sm">
             <Icon name="clock" className="h-4 w-4" />
             Ostatnia aktualizacja: {legalInfo.lastUpdated}
           </p>
@@ -34,7 +34,7 @@ export function LegalPage({ eyebrow, title, intro, sections }: LegalPageProps) {
 
         <div className="mt-12 grid items-start gap-10 border-t border-ink/10 pt-10 lg:mt-16 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16 lg:pt-14">
           <aside className="sticky top-28 hidden lg:block">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
               W tym dokumencie
             </p>
             <nav aria-label="Spis treści dokumentu" className="mt-5">
@@ -42,7 +42,7 @@ export function LegalPage({ eyebrow, title, intro, sections }: LegalPageProps) {
                 {sections.map((section, index) => (
                   <li key={section.title}>
                     <a
-                      className="group flex gap-3 rounded-xl px-3 py-3 text-sm leading-5 text-ink/60 transition-colors hover:bg-white hover:text-brand-dark"
+                      className="group flex gap-3 rounded-xl px-3 py-3 text-sm leading-5 text-muted transition-colors hover:bg-white hover:text-brand-dark"
                       href={`#sekcja-${index + 1}`}
                     >
                       <span className="pt-0.5 font-mono text-xs text-ink/30 group-hover:text-brand-dark">
@@ -82,7 +82,7 @@ export function LegalPage({ eyebrow, title, intro, sections }: LegalPageProps) {
                   <div className="mt-5 space-y-4">
                     {section.paragraphs.map((paragraph) => (
                       <p
-                        className="text-base leading-8 text-ink/65"
+                        className="text-base leading-8 text-muted"
                         key={paragraph}
                       >
                         {paragraph}
@@ -94,7 +94,7 @@ export function LegalPage({ eyebrow, title, intro, sections }: LegalPageProps) {
                   <ul className="mt-5 space-y-4">
                     {section.items.map((item) => (
                       <li
-                        className="flex gap-3 text-base leading-8 text-ink/65"
+                        className="flex gap-3 text-base leading-8 text-muted"
                         key={item}
                       >
                         <span

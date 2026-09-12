@@ -20,7 +20,7 @@ export function AboutSection() {
               wziąć do ręki? Dziś uczymy się druku 3D i zapisujemy wszystko,
               co odkrywamy po drodze.
             </p>
-            <p className="mt-5 leading-7 text-ink/65">
+            <p className="mt-5 leading-7 text-muted">
               Ten blog to nasz wspólny notatnik. Znajdziesz tu pierwsze próby,
               ustawienia, które sprawdzamy, i błędy, do których wracamy.
               Pisane po ludzku, z perspektywy początkujących.
@@ -47,7 +47,7 @@ export function AboutSection() {
                   {value}
                   {index < 2 && <span className="text-coral">.</span>}
                 </p>
-                <p className="mt-3 max-w-36 text-xs leading-5 text-ink/60 sm:max-w-none sm:text-sm">
+                <p className="mt-3 max-w-36 text-xs leading-5 text-muted sm:max-w-none sm:text-sm">
                   {label}
                 </p>
               </div>

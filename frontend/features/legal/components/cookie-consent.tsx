@@ -78,7 +78,7 @@ export function CookieConsent() {
               </h2>
             </div>
           </div>
-          <p className="mt-4 text-sm leading-6 text-ink/60">
+          <p className="mt-4 text-sm leading-6 text-muted">
             Strona używa elementów niezbędnych do działania. Analityka Google
             i tagi GTM będą uruchamiane dopiero po Twojej zgodzie.{" "}
             <Link
@@ -101,7 +101,7 @@ export function CookieConsent() {
               <span className="block text-sm font-semibold text-ink">
                 Analityka i rozwój strony
               </span>
-              <span className="mt-1 block text-xs leading-5 text-ink/55">
+              <span className="mt-1 block text-xs leading-5 text-muted">
                 Pomaga sprawdzać, które wpisy są czytane i jak ulepszać bloga.
               </span>
             </span>
@@ -124,7 +124,7 @@ export function CookieConsent() {
             Tylko niezbędne
           </button>
           <button
-            className="rounded-xl px-4 py-2.5 text-xs font-semibold text-ink/60 transition-colors hover:bg-mint hover:text-brand-dark min-[380px]:col-span-2"
+            className="rounded-xl px-4 py-2.5 text-xs font-semibold text-muted transition-colors hover:bg-mint hover:text-brand-dark min-[380px]:col-span-2"
             onClick={() => chooseConsent(analyticsAccepted)}
             type="button"
           >
