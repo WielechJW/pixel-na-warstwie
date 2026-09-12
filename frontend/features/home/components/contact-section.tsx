@@ -1,40 +1,50 @@
 import Link from "next/link";
 
+import { Icon } from "@/components/ui/icon";
+import { Reveal } from "@/components/ui/reveal";
 import { siteConfig } from "@/config/site";
 
 export function ContactSection() {
   return (
-    <section className="px-5 pb-16 sm:px-8 lg:px-12 lg:pb-20" id="kontakt">
-      <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[2.5rem] border-[3px] border-ink bg-coral lg:grid-cols-[1fr_0.78fr]">
-        <div className="p-8 text-white sm:p-12 lg:p-16">
-          <p className="text-sm font-black uppercase text-white/75">
-            Dołącz do rozmowy
-          </p>
-          <h2 className="mt-5 max-w-xl font-display text-4xl font-bold leading-tight sm:text-5xl">
-            Masz temat, który warto przetestować?
-          </h2>
-          <p className="mt-6 max-w-xl text-lg leading-8 text-white/84">
-            Zbieramy pomysły na wpisy, pytania początkujących i doświadczenia z
-            własnych drukarek. Ten blog ma rosnąć razem z naszą nauką.
-          </p>
-          <Link className="button-secondary mt-8 w-fit" href="/kontakt">
-            Napisz do nas
-          </Link>
+    <section className="px-5 pb-20 pt-6 sm:px-8 lg:px-12 lg:pb-24" id="kontakt">
+      <Reveal className="section-shell">
+        <div className="relative isolate overflow-hidden rounded-3xl bg-mint p-7 sm:p-11 lg:p-16">
+          <div aria-hidden="true" className="pointer-events-none absolute -right-36 -top-36 -z-10 h-120 w-120 rounded-full border border-brand-dark/10" />
+          <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 -z-10 h-88 w-88 rounded-full border border-brand-dark/10" />
+          <div className="grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end lg:gap-20">
+            <div>
+              <p className="section-label">Porozmawiajmy o druku</p>
+              <h2 className="section-title mt-5 max-w-2xl">
+                Dobry pomysł zaczyna się od rozmowy.
+              </h2>
+              <p className="mt-5 max-w-lg leading-7 text-ink/65">
+                Coś nie wyszło? Coś Cię zaciekawiło? Podrzuć pytanie,
+                doświadczenie albo temat, który warto przetestować.
+              </p>
+              <Link className="button-primary mt-8 gap-3" href="/kontakt">
+                Napisz do nas
+                <Icon className="h-4 w-4" name="arrow-up-right" />
+              </Link>
+            </div>
+            <div className="border-t border-ink/15 pt-6 lg:pb-1">
+              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-full border border-ink/15 text-brand-dark">
+                <Icon className="h-5 w-5" name="mail" />
+              </div>
+              <p className="mb-2 text-xs text-ink/60">Najprościej? Mailowo.</p>
+              <a
+                className="group inline-flex max-w-full items-center gap-2 break-all text-sm font-semibold tracking-[-0.02em] text-ink underline decoration-ink/25 underline-offset-5 transition-colors hover:text-brand-dark sm:text-base"
+                href={`mailto:${siteConfig.contactEmail}`}
+              >
+                {siteConfig.contactEmail}
+                <Icon className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transform-none" name="arrow-up-right" />
+              </a>
+              <p className="mt-4 text-xs leading-6 text-ink/55">
+                Każda wymiana doświadczeń to kolejny krok do przodu.
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col justify-center gap-4 bg-cream p-8 sm:p-10">
-          <p className="text-sm font-bold uppercase text-ink/55">
-            Kanały kontaktu
-          </p>
-          <p className="font-display text-2xl font-bold">
-            {siteConfig.contactEmail}
-          </p>
-          <p className="leading-7 text-ink/68">
-            Na razie najważniejsze jest uporządkowanie notatek i pierwszych
-            wpisów. Sprzedaż i zlecenia odkładamy na później, ale pytania i
-            pomysły na testy są mile widziane.
-          </p>
-        </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

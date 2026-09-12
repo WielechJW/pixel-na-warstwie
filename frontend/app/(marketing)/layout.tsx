@@ -9,8 +9,9 @@ export default function MarketingLayout({
 }>) {
   return (
     <div className="min-h-screen bg-cream text-ink">
+      <a className="skip-link" href="#main-content">Przejdź do treści</a>
       <SiteHeader />
-      {children}
+      <div id="main-content" tabIndex={-1}>{children}</div>
       <SiteFooter />
       <CookieConsent />
     </div>

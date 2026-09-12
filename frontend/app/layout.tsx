@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { getSiteUrl } from "@/config/site-url";
 import "./globals.css";
+
+const manrope = localFont({
+  src: "../public/fonts/manrope-variable.ttf",
+  variable: "--font-manrope",
+  display: "swap",
+  weight: "200 800",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -15,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
+    <html className={manrope.variable} lang="pl">
       <body>{children}</body>
     </html>
   );

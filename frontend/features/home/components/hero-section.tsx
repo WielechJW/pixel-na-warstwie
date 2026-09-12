@@ -1,79 +1,45 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import { heroHighlights } from "@/features/home/content";
+import { Icon } from "@/components/ui/icon";
+import { Reveal } from "@/components/ui/reveal";
+import { PrintStudy } from "@/features/home/components/print-study";
 
 export function HeroSection() {
   return (
-    <section
-      className="relative isolate overflow-hidden px-5 pb-20 pt-12 sm:px-8 sm:pb-24 lg:px-12 lg:pb-28 lg:pt-16"
-      id="start"
-    >
-      <div className="pattern-grid absolute inset-0 -z-20 opacity-45" />
-
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.04fr_0.96fr]">
-        <div>
-          <p className="badge mb-7">
-            <span className="inline-block h-2.5 w-2.5 rounded-full bg-coral" />
-            Blog o nauce druku 3D
-          </p>
-          <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.98] text-ink sm:text-6xl lg:text-[5rem]">
-            Uczymy się druku 3D.{" "}
-            <span className="relative inline-block text-brand-dark">
-              Notujemy
-              <span className="absolute -bottom-1 left-0 -z-10 h-3 w-full -rotate-1 rounded-full bg-sun/80" />
-            </span>
-            <br />
-            każdą warstwę.
-          </h1>
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-ink/72 sm:text-xl">
-            Pixel na Warstwie to dziennik naszej nauki: opisujemy pierwsze
-            wydruki, ustawienia, pomyłki, poprawki i doświadczenia z domowego
-            warsztatu 3D.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Link className="button-primary" href="/blog">
-              Czytaj dziennik
-            </Link>
-            <Link className="button-secondary" href="/#tematy">
-              Zobacz tematy
-            </Link>
-          </div>
-          <div className="mt-12 flex flex-wrap gap-3">
-            {heroHighlights.map((item) => (
-              <span className="feature-chip" key={item}>
-                <span className="text-coral">+</span> {item}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-[520px]">
-          <div className="logo-stage relative rounded-[2.75rem] border-[3px] border-ink bg-mint p-7 sm:p-10">
-            <span className="absolute left-7 top-7 rounded-full border-2 border-ink bg-sun px-4 py-2 text-xs font-black uppercase">
-              Dziennik warsztatu
-            </span>
-            <div className="pt-14">
-              <Image
-                alt="Logo Pixel na Warstwie z drukarką 3D"
-                className="mx-auto h-auto w-full max-w-[360px] drop-shadow-[0_14px_0_rgba(22,59,89,0.09)]"
-                height={300}
-                priority
-                src="/logo.png"
-                width={300}
-              />
-            </div>
-            <div className="mt-7 flex items-center gap-3 rounded-2xl border-2 border-ink/12 bg-white/62 p-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-coral font-display text-xl font-bold text-white">
-                #1
-              </div>
-              <p className="text-sm font-semibold leading-6 text-ink/72">
-                Zamiast katalogu produktów prowadzimy zapiski z nauki,
-                testów i małych odkryć.
+    <section className="px-5 pt-12 sm:px-8 sm:pt-16 lg:pt-17" id="start">
+      <div className="section-shell">
+        <div className="grid items-center gap-12 pb-14 md:grid-cols-[1.05fr_1fr] md:gap-8 lg:gap-14 lg:pb-18">
+          <div>
+            <Reveal><p className="section-label">Z ciekawości do druku 3D</p></Reveal>
+            <Reveal delay={70}>
+              <h1 className="mt-6 font-display text-[clamp(2.8rem,5.1vw,4.6rem)] font-semibold leading-[1.09] tracking-[-0.065em]">
+                Wielkie pomysły.<br /><span className="text-brand-dark">Małe warstwy.</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={140}>
+              <p className="mt-7 max-w-[460px] text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
+                Dwóch braci, jedna drukarka i mnóstwo rzeczy do odkrycia. Dzielimy się testami, błędami i małymi sukcesami z naszego świata druku 3D.
               </p>
-            </div>
+              <div className="mt-8 flex flex-wrap items-center gap-6">
+                <Link className="button-primary" href="/blog">Zajrzyj do dziennika <Icon className="h-4 w-4" name="arrow-up-right" /></Link>
+                <Link className="text-link py-3 text-ink/80" href="/#o-nas">Poznaj nas <Icon className="h-4 w-4" name="arrow-right" /></Link>
+              </div>
+              <div className="mt-10 flex items-center gap-3 border-t border-ink/10 pt-6 md:mt-12">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink/10"><Icon className="h-4 w-4 text-brand-dark" name="layers" /></span>
+                <p className="text-[11px] leading-5 text-muted">Prawdziwe próby. Szczere wnioski.<br /><span className="font-semibold text-ink">Warstwa po warstwie.</span></p>
+              </div>
+            </Reveal>
           </div>
-          <div className="absolute -bottom-5 left-10 right-10 -z-10 h-14 rounded-full bg-ink/18 blur-xl" />
+          <Reveal className="min-w-0" delay={160}><PrintStudy /></Reveal>
+        </div>
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-5 border-y border-ink/12 py-6">
+          <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-muted">Na naszym warsztacie</p>
+          {[
+            { name: "box", label: "Pierwsze wydruki" },
+            { name: "sliders", label: "Kalibracja i slicer" },
+            { name: "filament", label: "Filamenty" },
+            { name: "sparkles", label: "Lekcje z błędów" },
+          ].map((item) => <span className="flex items-center gap-2.5 text-xs font-semibold text-ink/75" key={item.label}><Icon className="h-4 w-4 text-brand-dark" name={item.name as "box" | "sliders" | "filament" | "sparkles"} />{item.label}</span>)}
         </div>
       </div>
     </section>

@@ -1,29 +1,59 @@
+import { Icon } from "@/components/ui/icon";
+import { Reveal } from "@/components/ui/reveal";
+
 export function AboutSection() {
   return (
-    <section className="px-5 py-20 sm:px-8 lg:px-12 lg:py-24" id="o-nas">
-      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
-        <div>
-          <p className="section-label">O nas</p>
-          <h2 className="section-title mt-4">
-            Dwóch braci, drukarka 3D i dużo pytań po drodze
-          </h2>
+    <section className="px-5 py-20 sm:px-8 lg:px-12 lg:py-28" id="o-nas">
+      <div className="section-shell">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-24">
+          <Reveal>
+            <p className="section-label">Ludzie za warstwami</p>
+            <h2 className="section-title mt-5 max-w-lg">
+              Dwóch braci.
+              <br />
+              Mnóstwo pomysłów.
+            </h2>
+          </Reveal>
+          <Reveal className="max-w-xl lg:pt-10" delay={100}>
+            <p className="text-lg leading-8 text-ink/80">
+              Zaczęło się od ciekawości: jak zamienić pomysł w coś, co można
+              wziąć do ręki? Dziś uczymy się druku 3D i zapisujemy wszystko,
+              co odkrywamy po drodze.
+            </p>
+            <p className="mt-5 leading-7 text-ink/65">
+              Ten blog to nasz wspólny notatnik. Znajdziesz tu pierwsze próby,
+              ustawienia, które sprawdzamy, i błędy, do których wracamy.
+              Pisane po ludzku, z perspektywy początkujących.
+            </p>
+            <div className="mt-6 flex items-center gap-3 text-sm font-semibold text-brand-dark">
+              <Icon className="h-4 w-4" name="layers" />
+              Uczymy się publicznie, warstwa po warstwie.
+            </div>
+          </Reveal>
         </div>
-        <div className="rounded-[2rem] border-2 border-ink/10 bg-white p-7 shadow-[8px_8px_0_#d9eee8] sm:p-10">
-          <p className="text-lg leading-8 text-ink/78">
-            Pixel na Warstwie nie jest teraz sklepem ani ofertą druku na
-            zamówienie. To miejsce, w którym porządkujemy naukę druku 3D:
-            zapisujemy, co testujemy, jakie ustawienia sprawdzamy i czego
-            dowiadujemy się z nieudanych prób.
-          </p>
-          <p className="mt-5 text-lg leading-8 text-ink/78">
-            Chcemy pisać normalnym językiem o rzeczach, które początkującemu
-            potrafią zabrać wieczór: przyczepności pierwszej warstwy, profilach
-            slicera, temperaturach, filamentach i cierpliwości.
-          </p>
-          <div className="mt-8 border-l-4 border-coral pl-5 font-display text-xl font-bold text-ink">
-            Nie udajemy ekspertów. Uczymy się publicznie, warstwa po warstwie.
+
+        <Reveal delay={150}>
+          <div className="mt-12 grid grid-cols-3 border-t border-ink/12 pt-7 lg:mt-16 lg:pt-9">
+            {[
+              ["02", "braci przy projekcie"],
+              ["01", "drukarka na start"],
+              ["∞", "powodów do odkrywania"],
+            ].map(([value, label], index) => (
+              <div
+                className={`min-w-0 ${index > 0 ? "border-l border-ink/12 pl-5 sm:pl-10 lg:pl-14" : "pr-4"}`}
+                key={label}
+              >
+                <p className="font-display text-4xl font-medium tracking-[-0.06em] sm:text-5xl">
+                  {value}
+                  {index < 2 && <span className="text-coral">.</span>}
+                </p>
+                <p className="mt-3 max-w-36 text-xs leading-5 text-ink/60 sm:max-w-none sm:text-sm">
+                  {label}
+                </p>
+              </div>
+            ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

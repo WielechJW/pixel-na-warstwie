@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
 
+import { Icon } from "@/components/ui/icon";
 import {
   openCookieSettings,
   parseCookieConsent,
@@ -15,7 +17,7 @@ import {
 export function CookieSettingsButton() {
   return (
     <button
-      className="nav-link font-bold"
+      className="nav-link text-left"
       onClick={openCookieSettings}
       type="button"
     >
@@ -54,61 +56,80 @@ export function CookieConsent() {
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[70] px-4 pb-4 sm:px-6 sm:pb-6">
-      <section className="mx-auto max-w-5xl rounded-[2rem] border-2 border-ink bg-white p-5 shadow-[6px_6px_0_var(--ink)] sm:p-6">
-        <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div>
-            <p className="section-label">Cookies</p>
-            <h2 className="mt-2 font-display text-2xl font-bold text-ink">
-              Ustawienia prywatności
-            </h2>
-            <p className="mt-3 leading-7 text-ink/70">
-              Strona używa elementów niezbędnych do działania. Analityka Google
-              i tagi GTM będą uruchamiane dopiero po Twojej zgodzie.
-            </p>
-            <label className="mt-4 flex items-start gap-3 rounded-2xl border-2 border-ink/10 bg-mint p-4">
-              <input
-                checked={analyticsAccepted}
-                className="mt-1 h-5 w-5 accent-[#207f82]"
-                onChange={(event) =>
-                  setAnalyticsDraft(event.currentTarget.checked)
-                }
-                type="checkbox"
-              />
-              <span>
-                <span className="block font-bold text-ink">
-                  Analityka i rozwój strony
-                </span>
-                <span className="mt-1 block text-sm leading-6 text-ink/65">
-                  Pomaga sprawdzać, które wpisy są czytane i jak ulepszać bloga.
-                </span>
+    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[70] px-3 pb-3 sm:px-6 sm:pb-6">
+      <section
+        aria-labelledby="cookie-consent-title"
+        className="pointer-events-auto max-h-[calc(100dvh-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-ink/12 bg-white p-5 shadow-[0_12px_70px_-20px] shadow-ink/20 sm:p-6"
+      >
+        <div>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-mint text-brand-dark">
+              <Icon name="sliders" className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-dark">
+                Po Twojej stronie
+              </p>
+              <h2
+                id="cookie-consent-title"
+                className="mt-0.5 font-display text-xl font-semibold tracking-tight text-ink"
+              >
+                Twoja prywatność
+              </h2>
+            </div>
+          </div>
+          <p className="mt-4 text-sm leading-6 text-ink/60">
+            Strona używa elementów niezbędnych do działania. Analityka Google
+            i tagi GTM będą uruchamiane dopiero po Twojej zgodzie.{" "}
+            <Link
+              className="font-medium text-ink underline decoration-ink/20 underline-offset-4 hover:text-brand-dark"
+              href="/cookies"
+            >
+              Więcej o cookies
+            </Link>
+          </p>
+          <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-2xl border border-ink/8 bg-cream/60 p-3.5">
+            <input
+              checked={analyticsAccepted}
+              className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-brand-dark"
+              onChange={(event) =>
+                setAnalyticsDraft(event.currentTarget.checked)
+              }
+              type="checkbox"
+            />
+            <span>
+              <span className="block text-sm font-semibold text-ink">
+                Analityka i rozwój strony
               </span>
-            </label>
-          </div>
+              <span className="mt-1 block text-xs leading-5 text-ink/55">
+                Pomaga sprawdzać, które wpisy są czytane i jak ulepszać bloga.
+              </span>
+            </span>
+          </label>
+        </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-            <button
-              className="button-primary"
-              onClick={() => chooseConsent(true)}
-              type="button"
-            >
-              Akceptuję analitykę
-            </button>
-            <button
-              className="button-secondary"
-              onClick={() => chooseConsent(analyticsAccepted)}
-              type="button"
-            >
-              Zapisz wybór
-            </button>
-            <button
-              className="font-bold text-ink/62"
-              onClick={() => chooseConsent(false)}
-              type="button"
-            >
-              Tylko niezbędne
-            </button>
-          </div>
+        <div className="mt-5 grid grid-cols-1 gap-2 min-[380px]:grid-cols-2">
+          <button
+            className="button-primary px-3! text-xs!"
+            onClick={() => chooseConsent(true)}
+            type="button"
+          >
+            Akceptuję analitykę
+          </button>
+          <button
+            className="button-secondary px-3! text-xs!"
+            onClick={() => chooseConsent(false)}
+            type="button"
+          >
+            Tylko niezbędne
+          </button>
+          <button
+            className="rounded-xl px-4 py-2.5 text-xs font-semibold text-ink/60 transition-colors hover:bg-mint hover:text-brand-dark min-[380px]:col-span-2"
+            onClick={() => chooseConsent(analyticsAccepted)}
+            type="button"
+          >
+            Zapisz mój wybór
+          </button>
         </div>
       </section>
     </div>

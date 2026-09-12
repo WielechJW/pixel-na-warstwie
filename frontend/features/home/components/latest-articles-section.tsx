@@ -1,50 +1,51 @@
 import Link from "next/link";
 
-import { formatArticleDate, getBlogArticles } from "@/features/blog/content";
+import { Icon } from "@/components/ui/icon";
+import { Reveal } from "@/components/ui/reveal";
+import { ArticleCard } from "@/features/blog/components/article-card";
+import { getBlogArticles } from "@/features/blog/content";
 
 export async function LatestArticlesSection() {
   const articles = await getBlogArticles();
   const latestArticles = articles.slice(0, 3);
 
   return (
-    <section className="px-5 py-20 sm:px-8 lg:px-12 lg:py-28" id="notatki">
-      <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-          <div className="max-w-2xl">
-            <p className="section-label">Ostatnie wpisy</p>
-            <h2 className="section-title mt-4">
-              Zamiast zdjęć produktów: notatki z nauki
-            </h2>
+    <section className="scroll-mt-28 px-5 py-20 sm:px-8 lg:px-12 lg:py-28" id="notatki">
+      <div className="section-shell">
+        <Reveal>
+          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+            <div className="max-w-2xl">
+              <p className="section-label">Dziennik pracowni</p>
+              <h2 className="section-title mt-4">Świeżo z warsztatu.</h2>
+              <p className="mt-4 max-w-lg text-base leading-7 text-muted">
+                Trochę teorii, dużo praktyki. I wnioski, którymi warto się podzielić.
+              </p>
+            </div>
+            <Link className="text-link mb-1 w-fit shrink-0" href="/blog">
+              Wszystkie wpisy <Icon name="arrow-up-right" className="size-4" />
+            </Link>
           </div>
-          <Link className="button-secondary w-fit" href="/blog">
-            Wszystkie wpisy
-          </Link>
-        </div>
+        </Reveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {latestArticles.map((article) => (
-            <article
-              className="flex h-full flex-col rounded-[2rem] border-2 border-ink/10 bg-white p-6 shadow-[5px_5px_0_#e4f5ef]"
-              key={article.slug}
-            >
-              <p className="text-sm font-bold text-coral">
-                {article.category} / {formatArticleDate(article.publishedAt)}
-              </p>
-              <h3 className="mt-4 font-display text-2xl font-bold leading-tight">
-                <Link href={`/blog/${article.slug}`}>{article.title}</Link>
-              </h3>
-              <p className="mt-4 flex-1 leading-7 text-ink/68">
-                {article.description}
-              </p>
-              <Link
-                className="mt-7 font-bold text-brand-dark"
-                href={`/blog/${article.slug}`}
-              >
-                Czytaj wpis
-              </Link>
-            </article>
-          ))}
-        </div>
+        {latestArticles.length > 0 ? (
+          <div className="mt-10 grid gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3">
+            {latestArticles.map((article, index) => (
+              <Reveal className="h-full" delay={index * 100} key={article.slug}>
+                <ArticleCard article={article} />
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <Reveal className="mt-10">
+            <div className="surface-card flex flex-col items-start gap-5 p-8 sm:flex-row sm:items-center sm:p-10">
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-mint"><Icon name="layers" className="size-6 text-brand-dark" /></span>
+              <div>
+                <h3 className="font-display text-2xl font-semibold tracking-tight">Dobre rzeczy potrzebują kilku warstw.</h3>
+                <p className="mt-2 leading-7 text-muted">Nowe notatki są w przygotowaniu. Zajrzyj do nas ponownie.</p>
+              </div>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

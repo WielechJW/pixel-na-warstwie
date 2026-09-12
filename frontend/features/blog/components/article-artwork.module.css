@@ -1,0 +1,147 @@
+.artwork {
+  --art-accent: var(--brand-dark);
+  --art-mid: var(--brand);
+  --art-light: var(--mint);
+  position: relative;
+  width: 100%;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 8 / 5;
+  background: color-mix(in srgb, var(--mint) 70%, var(--cream));
+}
+
+.artwork[data-variant="1"] {
+  --art-accent: color-mix(in srgb, var(--coral) 64%, var(--ink));
+  --art-mid: var(--coral);
+  --art-light: color-mix(in srgb, var(--coral) 28%, var(--cream));
+  background: color-mix(in srgb, var(--coral) 13%, var(--cream));
+}
+
+.artwork[data-variant="2"] {
+  --art-accent: var(--ink);
+  --art-mid: color-mix(in srgb, var(--ink) 72%, var(--brand));
+  --art-light: color-mix(in srgb, var(--brand) 35%, var(--mint));
+  background: color-mix(in srgb, var(--ink) 6%, var(--cream));
+}
+
+.artwork svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.label {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: color-mix(in srgb, var(--ink) 54%, transparent);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.label::before {
+  width: 0.3rem;
+  height: 0.3rem;
+  background: currentColor;
+  border-radius: 50%;
+  content: "";
+}
+
+.object {
+  transform-origin: center;
+  transition: transform 750ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid color-mix(in srgb, var(--ink) 11%, transparent);
+  border-radius: 1.1rem;
+  background: color-mix(in srgb, white 74%, var(--cream));
+  overflow: hidden;
+  transition: border-color 250ms ease, box-shadow 250ms ease, transform 350ms ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: color-mix(in srgb, var(--ink) 24%, transparent);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--ink) 6%, transparent);
+  transform: translateY(-5px);
+}
+
+.card:hover .object,
+.card:focus-visible .object {
+  transform: translateY(-5px) rotate(-3deg) scale(1.045);
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  flex-shrink: 0;
+  border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  border-radius: 50%;
+  transition: color 220ms ease, background 220ms ease, transform 220ms ease;
+}
+
+.card:hover .arrow,
+.card:focus-visible .arrow {
+  color: var(--cream);
+  background: var(--ink);
+  transform: rotate(45deg);
+}
+
+.featured {
+  display: grid;
+}
+
+.tocLink {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  transition: color 180ms ease;
+}
+
+.tocLink:hover {
+  color: var(--brand-dark);
+}
+
+@media (min-width: 768px) {
+  .featured {
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .featured .artwork {
+    height: 100%;
+    min-height: 340px;
+    aspect-ratio: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .object,
+  .arrow {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:focus-visible,
+  .card:hover .object,
+  .card:focus-visible .object,
+  .card:hover .arrow,
+  .card:focus-visible .arrow {
+    transform: none;
+  }
+}

@@ -1,0 +1,60 @@
+.stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1 / 1.04;
+  border: 1px solid rgb(32 60 54 / 7%);
+  border-radius: 26px;
+  background: #e6ede0;
+}
+.topline {
+  position: absolute;
+  z-index: 2;
+  inset: 25px 26px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--brand-dark);
+}
+.artwork { position: absolute; inset: 45px 0 auto; width: 100%; height: auto; }
+.sculpture { animation: float 7s ease-in-out infinite; }
+.slice { animation: separate 6s ease-in-out infinite; animation-delay: var(--slice-delay, 0s); }
+.note {
+  position: absolute;
+  left: 22px;
+  bottom: 85px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 17px 13px 12px;
+  border: 1px solid rgb(255 255 255 / 90%);
+  border-radius: 13px;
+  background: rgb(247 248 242 / 90%);
+  box-shadow: 0 8px 30px rgb(32 60 54 / 5%);
+  backdrop-filter: blur(12px);
+}
+.caption {
+  position: absolute;
+  bottom: 28px;
+  left: 26px;
+  right: 68px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--brand-dark);
+}
+.stage[data-paused="true"] * { animation-play-state: paused; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes separate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@media (max-width: 767px) {
+  .stage { max-width: 520px; margin-inline: auto; }
+  .note { bottom: 60px; padding: 10px 13px 10px 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .sculpture, .slice { animation: none; } }

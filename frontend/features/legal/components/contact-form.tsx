@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 
+import { Icon } from "@/components/ui/icon";
 import type {
   ContactFieldErrors,
   ContactFormResponse,
@@ -25,6 +26,9 @@ const initialFormState: ContactFormState = {
   privacyAccepted: false,
   website: "",
 };
+
+const inputClassName =
+  "mt-2.5 w-full rounded-xl border border-ink/12 bg-cream/35 px-4 py-3.5 text-base text-ink outline-none transition-[border-color,background-color,box-shadow] placeholder:text-ink/30 hover:border-ink/25 focus:border-brand-dark focus:bg-white focus:ring-4 focus:ring-brand/10 disabled:cursor-wait disabled:opacity-60 aria-invalid:border-error";
 
 export function ContactForm() {
   const [form, setForm] = useState(initialFormState);
@@ -97,9 +101,17 @@ export function ContactForm() {
 
   return (
     <form
-      className="rounded-[2rem] border-2 border-ink bg-mint p-6 shadow-[8px_8px_0_#163b59] sm:p-8"
+      className="rounded-3xl border border-ink/10 bg-white p-6 shadow-[0_16px_60px_-30px] shadow-ink/20 sm:p-9"
       onSubmit={submitForm}
     >
+      <div className="mb-8 border-b border-ink/10 pb-7">
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          Zostaw wiadomość
+        </h2>
+        <p className="mt-2 text-sm leading-6 text-ink/50">
+          Kilka słów wystarczy, żeby zacząć. Wszystkie pola są wymagane.
+        </p>
+      </div>
       <div className="hidden" aria-hidden="true">
         <label htmlFor="contact-website">Strona internetowa</label>
         <input
@@ -113,18 +125,19 @@ export function ContactForm() {
         />
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2">
         <label className="block" htmlFor="contact-name">
-          <span className="font-bold text-ink">Imię</span>
+          <span className="text-sm font-semibold text-ink">Imię</span>
           <input
             aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
             aria-invalid={Boolean(fieldErrors.name)}
             autoComplete="name"
-            className="mt-2 w-full rounded-2xl border-2 border-ink/15 bg-white px-4 py-3 outline-none focus:border-brand-dark"
+            className={inputClassName}
             disabled={isSending}
             id="contact-name"
             name="name"
             onChange={(event) => updateField("name", event.currentTarget.value)}
+            placeholder="Jak masz na imię?"
             required
             type="text"
             value={form.name}
@@ -132,18 +145,19 @@ export function ContactForm() {
           <FieldError id="contact-name-error" message={fieldErrors.name} />
         </label>
         <label className="block" htmlFor="contact-email">
-          <span className="font-bold text-ink">E-mail</span>
+          <span className="text-sm font-semibold text-ink">E-mail</span>
           <input
             aria-describedby={
               fieldErrors.email ? "contact-email-error" : undefined
             }
             aria-invalid={Boolean(fieldErrors.email)}
             autoComplete="email"
-            className="mt-2 w-full rounded-2xl border-2 border-ink/15 bg-white px-4 py-3 outline-none focus:border-brand-dark"
+            className={inputClassName}
             disabled={isSending}
             id="contact-email"
             name="email"
             onChange={(event) => updateField("email", event.currentTarget.value)}
+            placeholder="twoj@email.pl"
             required
             type="email"
             value={form.email}
@@ -152,18 +166,19 @@ export function ContactForm() {
         </label>
       </div>
 
-      <label className="mt-5 block" htmlFor="contact-subject">
-        <span className="font-bold text-ink">Temat</span>
+      <label className="mt-6 block" htmlFor="contact-subject">
+        <span className="text-sm font-semibold text-ink">Temat</span>
         <input
           aria-describedby={
             fieldErrors.subject ? "contact-subject-error" : undefined
           }
           aria-invalid={Boolean(fieldErrors.subject)}
-          className="mt-2 w-full rounded-2xl border-2 border-ink/15 bg-white px-4 py-3 outline-none focus:border-brand-dark"
+          className={inputClassName}
           disabled={isSending}
           id="contact-subject"
           name="subject"
           onChange={(event) => updateField("subject", event.currentTarget.value)}
+          placeholder="O czym porozmawiamy?"
           required
           type="text"
           value={form.subject}
@@ -171,28 +186,33 @@ export function ContactForm() {
         <FieldError id="contact-subject-error" message={fieldErrors.subject} />
       </label>
 
-      <label className="mt-5 block" htmlFor="contact-message">
-        <span className="font-bold text-ink">Wiadomość</span>
+      <label className="mt-6 block" htmlFor="contact-message">
+        <span className="text-sm font-semibold text-ink">Wiadomość</span>
         <textarea
           aria-describedby={
             fieldErrors.message ? "contact-message-error" : undefined
           }
           aria-invalid={Boolean(fieldErrors.message)}
-          className="mt-2 min-h-44 w-full resize-y rounded-2xl border-2 border-ink/15 bg-white px-4 py-3 outline-none focus:border-brand-dark"
+          className={`${inputClassName} min-h-44 resize-y`}
           disabled={isSending}
           id="contact-message"
           name="message"
           onChange={(event) => updateField("message", event.currentTarget.value)}
+          placeholder="Opisz swoje pytanie lub pomysł…"
           required
           value={form.message}
         />
         <FieldError id="contact-message-error" message={fieldErrors.message} />
       </label>
 
-      <label className="mt-5 flex gap-3 text-sm leading-6 text-ink/70">
+      <label className="mt-6 flex cursor-pointer items-start gap-3 text-xs leading-6 text-ink/60 sm:text-sm">
         <input
+          aria-describedby={
+            fieldErrors.privacyAccepted ? "contact-privacy-error" : undefined
+          }
+          aria-invalid={Boolean(fieldErrors.privacyAccepted)}
           checked={form.privacyAccepted}
-          className="mt-1 h-5 w-5 accent-[#207f82]"
+          className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-brand-dark"
           disabled={isSending}
           onChange={(event) =>
             updateField("privacyAccepted", event.currentTarget.checked)
@@ -210,18 +230,26 @@ export function ContactForm() {
         message={fieldErrors.privacyAccepted}
       />
 
-      <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="mt-7 flex flex-col gap-4">
         <button
-          className="button-primary disabled:cursor-not-allowed disabled:opacity-65"
+          className="button-primary w-full gap-3 disabled:cursor-not-allowed disabled:opacity-65"
           disabled={isSending}
           type="submit"
         >
           {isSending ? "Wysyłanie..." : "Wyślij wiadomość"}
+          {isSending ? (
+            <span
+              aria-hidden="true"
+              className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent motion-reduce:animate-none"
+            />
+          ) : (
+            <Icon name="arrow-up-right" className="h-4 w-4" />
+          )}
         </button>
         {statusMessage ? (
           <p
-            className={`text-sm font-bold leading-6 ${
-              status === "success" ? "text-brand-dark" : "text-coral"
+            className={`rounded-xl px-4 py-3 text-sm font-medium leading-6 ${
+              status === "success" ? "bg-mint text-brand-dark" : "bg-coral/10 text-error"
             }`}
             role="status"
           >
@@ -245,7 +273,7 @@ function FieldError({
   }
 
   return (
-    <p className="mt-2 text-sm font-bold text-coral" id={id}>
+    <p className="mt-2 text-sm font-medium text-error" id={id}>
       {message}
     </p>
   );

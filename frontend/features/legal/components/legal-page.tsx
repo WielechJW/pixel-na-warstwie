@@ -1,3 +1,7 @@
+import Link from "next/link";
+
+import { Icon } from "@/components/ui/icon";
+import { Reveal } from "@/components/ui/reveal";
 import type { LegalSection } from "@/features/legal/content";
 import { legalInfo } from "@/features/legal/content";
 
@@ -8,57 +12,103 @@ type LegalPageProps = {
   sections: readonly LegalSection[];
 };
 
-export function LegalPage({
-  eyebrow,
-  title,
-  intro,
-  sections,
-}: LegalPageProps) {
+export function LegalPage({ eyebrow, title, intro, sections }: LegalPageProps) {
   return (
-    <main className="px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
-      <div className="mx-auto max-w-4xl">
-        <p className="section-label">{eyebrow}</p>
-        <h1 className="mt-4 font-display text-5xl font-bold leading-none text-ink sm:text-6xl">
-          {title}
-        </h1>
-        <p className="mt-6 text-lg leading-8 text-ink/72">{intro}</p>
-        <p className="mt-4 text-sm font-bold text-ink/55">
-          Ostatnia aktualizacja: {legalInfo.lastUpdated}
-        </p>
+    <main className="px-5 pb-20 pt-12 sm:px-8 sm:pt-16 lg:px-12 lg:pb-28 lg:pt-20">
+      <div className="section-shell">
+        <Reveal className="max-w-4xl">
+          <Link className="text-link mb-10 text-sm" href="/">
+            <Icon name="arrow-left" className="h-4 w-4" />
+            Wróć do strony głównej
+          </Link>
+          <p className="section-label">{eyebrow}</p>
+          <h1 className="page-title mt-5">{title}</h1>
+          <p className="mt-6 max-w-2xl text-base leading-8 text-ink/65 sm:text-lg">
+            {intro}
+          </p>
+          <p className="mt-6 flex items-center gap-2 text-xs font-medium text-ink/45 sm:text-sm">
+            <Icon name="clock" className="h-4 w-4" />
+            Ostatnia aktualizacja: {legalInfo.lastUpdated}
+          </p>
+        </Reveal>
 
-        <div className="mt-12 space-y-6">
-          {sections.map((section) => (
-            <section
-              className="rounded-[2rem] border-2 border-ink/10 bg-white p-6 shadow-[5px_5px_0_#e4f5ef] sm:p-8"
-              key={section.title}
-            >
-              <h2 className="font-display text-3xl font-bold">
-                {section.title}
-              </h2>
-              {section.paragraphs ? (
-                <div className="mt-5 space-y-4">
-                  {section.paragraphs.map((paragraph) => (
-                    <p
-                      className="text-lg leading-8 text-ink/72"
-                      key={paragraph}
+        <div className="mt-12 grid items-start gap-10 border-t border-ink/10 pt-10 lg:mt-16 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16 lg:pt-14">
+          <aside className="sticky top-28 hidden lg:block">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink/45">
+              W tym dokumencie
+            </p>
+            <nav aria-label="Spis treści dokumentu" className="mt-5">
+              <ol className="space-y-1">
+                {sections.map((section, index) => (
+                  <li key={section.title}>
+                    <a
+                      className="group flex gap-3 rounded-xl px-3 py-3 text-sm leading-5 text-ink/60 transition-colors hover:bg-white hover:text-brand-dark"
+                      href={`#sekcja-${index + 1}`}
                     >
-                      {paragraph}
-                    </p>
-                  ))}
+                      <span className="pt-0.5 font-mono text-xs text-ink/30 group-hover:text-brand-dark">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span>{section.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+            <Link className="text-link mt-7 text-sm" href="/kontakt">
+              Masz pytanie?
+              <Icon name="arrow-up-right" className="h-4 w-4" />
+            </Link>
+          </aside>
+
+          <div className="min-w-0 rounded-3xl border border-ink/10 bg-white px-6 sm:px-10 lg:px-12">
+            {sections.map((section, index) => (
+              <section
+                className="scroll-mt-28 border-b border-ink/10 py-8 last:border-b-0 sm:py-10"
+                id={`sekcja-${index + 1}`}
+                key={section.title}
+              >
+                <div className="flex items-start gap-4">
+                  <span
+                    className="mt-1.5 font-mono text-xs font-medium text-brand-dark"
+                    aria-hidden="true"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h2 className="font-display text-xl font-semibold leading-snug tracking-tight sm:text-2xl">
+                    {section.title}
+                  </h2>
                 </div>
-              ) : null}
-              {section.items ? (
-                <ul className="mt-5 space-y-3">
-                  {section.items.map((item) => (
-                    <li className="flex gap-3 leading-7 text-ink/72" key={item}>
-                      <span className="font-bold text-coral">+</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </section>
-          ))}
+                {section.paragraphs ? (
+                  <div className="mt-5 space-y-4">
+                    {section.paragraphs.map((paragraph) => (
+                      <p
+                        className="text-base leading-8 text-ink/65"
+                        key={paragraph}
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                ) : null}
+                {section.items ? (
+                  <ul className="mt-5 space-y-4">
+                    {section.items.map((item) => (
+                      <li
+                        className="flex gap-3 text-base leading-8 text-ink/65"
+                        key={item}
+                      >
+                        <span
+                          className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-dark/60"
+                          aria-hidden="true"
+                        />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </section>
+            ))}
+          </div>
         </div>
       </div>
     </main>
